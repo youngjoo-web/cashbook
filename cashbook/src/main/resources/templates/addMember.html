@@ -19,7 +19,7 @@
 <script
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
 <script>
-	let helperInit = function(){
+	let helperInit = function(){//입력 오류 헬퍼
 		$('#idHelper').text("");
 		$('#pwHelper').text("");
 		$('#pw2Helper').text("");
@@ -30,7 +30,7 @@
 	};
 	
 	$(document).ready(function(){
-		$('#btn').click(function(){
+		$('#btn').click(function(){//버튼 클릭시 실행 되는 자바스크립트
 		/*if($('#memberId').val().length < 4){
 			helperInit();
 			let msg = "ID는 4자이상"
@@ -46,20 +46,45 @@
 			$('#memberPw2').focus();
 		}else if($('#memberName').val().length < 4){
 			helperInit();
-			$('#nameHelper').text("이름을4자이상");
+			$('#nameHelper').text("이름을 입력");
 			$('#memberName').focus();
-		}else if($('#memberAddr').val().length < 4){
+		}else if($('#memberPhone').val().length ===0){
 			helperInit();
-			$('#addrHelper').text("주소를4자이상");
-			$('#memberAddr').focus();
-		}else if($('#memberPhone').val().length < 4){
-			helperInit();
-			$('#phoneHelper').text("전화번호를4자이상");
+			$('#phoneHelper').text("전화번호를 입력");
 			$('#memberPhone').focus();
-		}else{
-			
 		}*/
+		if($('#memberId').val().length <4){
+			helperInit();
+			$('#idHelper').text("아이디4자이상");
+			$('#memberId').focus();
+		}else if($('#memberPw').val().length < 4){
+			helperInit();
+			$('#pwHelper').text("비밀번호를4자이상");
+			$('#memberPw').focus();
+		}else if($('#memberPw').val() != $('#memberPw2').val()){
+			helperInit();
+			$('#pw2Helper').text("비밀번호 불일치");
+			$('#memberPw2').focus();
+		}else if($('#memberName').val().length === 0){
+			helperInit();
+			$('#nameHelper').text("이름을 입력");
+			$('#memberName').focus();
+		}else if($('#memberAddr').val().length === 0){
+			helperInit();
+			$('#addrHelper').text("주소를 입력");
+			$('#memberAddr').focus();
+		}else if($('#memberPhone').val().length ===0){
+			helperInit();
+			$('#phoneHelper').text("전화번호를 입력");
+			$('#memberPhone').focus();
+		}else if($('#memberEmail').val().length ===0){
+			helperInit();
+			$('#emailHelper').text("이메일을 입력");
+			$('#memberEmail').focus();
+		}else{
 			$('#myform').submit();
+		}
+			
 		});
 	});
 </script>
@@ -73,11 +98,11 @@
 			<span id="idHelper"></span>
 		</div>
 		<div>
-			비밀번호 : <input type="text" name="memberPW" id="memberPw">
+			비밀번호 : <input type="text" name="memberPw" id="memberPw">
 			<span id="pwHelper"></span>
 		</div>
 		<div>
-			비밀번호확인 : <input type="text" id="memberPW2">
+			비밀번호확인 : <input type="text" id="memberPw2">
 			<span id="pw2Helper"></span>
 		</div>
 		<div>

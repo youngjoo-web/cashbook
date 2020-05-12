@@ -8,7 +8,7 @@ public class Member {
 	private String memberPhone;
 	private String memberEmail;
 	@Override
-	public String toString() {
+	public String toString() {//입력값을 클래스로 출력
 		return "Member [memberId=" + memberId + ", memberPw=" + memberPw + ", memberName=" + memberName
 				+ ", memberAddr=" + memberAddr + ", memberPhone=" + memberPhone + ", memberEmail=" + memberEmail + "]";
 	}
