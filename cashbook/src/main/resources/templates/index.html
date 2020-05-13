@@ -24,17 +24,17 @@
 	<div class="row">
 	<div class="col"></div>
 	<div class="col">
-		<h1 th:text="가계부"></h1>
-		
+		<h1 align="center" th:text="가계부"></h1>
+		<br>
+		<br>		
 		<div th:if="${session.loginMember != null}"><!-- 로그인이 되어있을시 -->
-			<a href="/logout" class="btn btn-primary">로그아웃</a>
+			<a href="/logout" class="btn btn-primary btn-block">로그아웃</a>
 		</div>
 		<div th:if="${session.loginMember == null}"><!-- 로그인이 되어있지 않을시 -->
-			<a href="/login" class="btn btn-primary">로그인</a>
-		</div>
+			<a href="/login" class="btn btn-primary btn-block">로그인</a>
 		<br>
-		<div>
-			<a href="/addMember" class="btn btn-primary">회원가입</a>
+		<br>
+			<a href="/addMember" class="btn btn-primary btn-block">회원가입</a>
 		</div>
 	</div>
 	<div class="col"></div>
