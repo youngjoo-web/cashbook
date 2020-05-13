@@ -18,23 +18,26 @@
 <!-- Latest compiled JavaScript -->
 <script
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
-
+<script>
+	$(document).ready(function(){
+		$('#btn').click(function(){
+			$('#myform').submit();
+		});
+	});
+</script>
 </head>
 <body>
-	<div class="container">
-		<h1 th:text="가계부"></h1>
-		
-		<div th:if="${session.loginMember != null}">
-			<a href="/logout" class="btn btn-primary">로그아웃</a>
-		</div>
-		<div th:if="${session.loginMember == null}">
-			<a href="/login" class="btn btn-primary">로그인</a>
-		</div>
-		<br>
+	<h1>로그인</h1>
+	<form method="post" action="/login" id="myform">
 		<div>
-			<a href="/addMember" class="btn btn-primary">회원가입</a>
+			member_id : <input type="text" id="memberId" name="memberId">
 		</div>
-	</div>
-
+		<div>
+			member_pw : <input type="password" id="memberPw" name="memberPw">
+		</div>
+		<div>
+			<button type="button" id="btn"> 로그인 </button>
+		</div>
+	</form>
 </body>
 </html>
