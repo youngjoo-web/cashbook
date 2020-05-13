@@ -30,6 +30,9 @@
 	};
 	
 	$(document).ready(function(){
+		$('#idBtn').click(function(){
+			$('#idForm').submit();
+		});
 		$('#btn').click(function(){//버튼 클릭시 실행 되는 자바스크립트
 		/*if($('#memberId').val().length < 4){
 			helperInit();
@@ -86,15 +89,25 @@
 		}
 			
 		});
+		
 	});
 </script>
 </head>
 <body>
-<div class="container">
+<div class="row">
+	<div class="col"></div>
+	<div class="col">
 	<h1>회원가입</h1>
+	<form id="idForm" method="post" action="/checkMemberId">
+		<div>
+			아이디 중복 확인 : <input type="text" name="memberIdCheck" id="memberIdCheck">
+			<button id="idBtn" type="button">중복체크</button>
+			<span th:text="${msg}"></span>
+		</div>
+	</form>
 	<form id = "myform" method="post" action="/addMember">
 		<div>
-			아이디 : <input type="text" name="memberId" id="memberId">
+			아이디 : <input type="text" th:value="${memberIdCheck}" name="memberId" id="memberId" readonly="readonly">
 			<span id="idHelper"></span>
 		</div>
 		<div>
@@ -125,6 +138,8 @@
 			<button id ="btn" type="button">추가</button>
 		</div>
 	</form>
+	</div>
+	<div class="col"></div>
 </div>
 </body>
 </html>
