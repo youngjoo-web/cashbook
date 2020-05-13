@@ -14,10 +14,10 @@ public class MemberService {
 	@Autowired
 	private MemberMapper memberMapper;//private으로 mapper선언
 	
-	public String checkMemberId(String memberIdCheck) {
+	public String checkMemberId(String memberIdCheck) {//회원가입시 아이디중복체크
 		return memberMapper.selectMemberId(memberIdCheck);
 	}
-	public LoginMember login(LoginMember loginMember) {
+	public LoginMember login(LoginMember loginMember) {//로그인시 아이디 비밀번호 일치여부확인
 		return memberMapper.selectLoginMember(loginMember);
 	}
 	public int addMember(Member member) {
