@@ -3,6 +3,27 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.gdu.cashbook.mapper.MemberMapper">
+	
+	<delete id="deleteMember" parameterType="com.gdu.cashbook.vo.Member">
+	DELETE
+	FROM member
+	WHERE 
+		member_id = #{memberId}
+    AND member_pw = PASSWORD(#{memberPw})
+	
+	</delete>
+	
+	<update id="updateMember" parameterType="com.gdu.cashbook.vo.Member">
+	UPDATE
+		member
+	SET member_name = #{memberName},
+		member_addr = #{memberAddr},
+		member_phone = #{memberPhone},
+		member_email = #{memberEmail}
+	WHERE
+		member_id = #{memberId}
+	AND	member_pw = PASSWORD(#{memberPw})
+	</update>
 	<select id="selectMemberOne" parameterType="com.gdu.cashbook.vo.LoginMember" resultType="com.gdu.cashbook.vo.Member">
 		SELECT
 			member_id as memberId,
@@ -17,16 +38,17 @@
     
     	SELECT
     		member_id
-    	FROM member
+    	FROM (	SELECT member_id FROM member
+				UNION
+				SELECT member_id FROM member_id) t
     	WHERE member_id = #{memberIdCheck}
     </select>
     <select id="selectLoginMember" parameterType="com.gdu.cashbook.vo.LoginMember" resultType="com.gdu.cashbook.vo.LoginMember">
     	SELECT
-    		member_id as memberId,
-    		member_pw as memberPw
+    		member_id as memberId
     	FROM member
     	WHERE member_id = #{memberId}
-    	AND member_pw = #{memberPw}
+    	AND member_pw = PASSWORD(#{memberPw})
     </select>
     <!-- memberMapper 데이터 추가 쿼리 구현-->
     <insert id="insertMember" parameterType="com.gdu.cashbook.vo.Member">
@@ -39,12 +61,19 @@
             member_email
         ) VALUES (
             #{memberId},
-            #{memberPw},
+            PASSWORD(#{memberPw}),
             #{memberName},
             #{memberAddr},
             #{memberPhone},
             #{memberEmail}
         )
+    </insert>
+    <insert id="insertMemberId" parameterType="com.gdu.cashbook.vo.Member">
+    	INSERT INTO member_id(
+    		member_id
+    	) VALUES (
+    		#{memberId}
+    	)
     </insert>
     
 </mapper>

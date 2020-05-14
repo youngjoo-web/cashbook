@@ -26,4 +26,11 @@ public class MemberService {
 	public int addMember(Member member) {
 		return memberMapper.insertMember(member);//mapper호출후 데이터 삽입
 	}
+	public int removeMember(Member member) {
+		memberMapper.insertMemberId(member);
+		return memberMapper.deleteMember(member);
+	}
+	public int modifyMember(Member member) {
+		return memberMapper.updateMember(member);
+	}
 }

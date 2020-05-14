@@ -21,8 +21,55 @@ public class MemberController {
 	
 	@Autowired
 	private MemberService memberService;
+	/*
+	 * remove member
+	 * - 비밀번호 입력창
+	 * - 입력받은 비밀번호와 세션값의 아이디로 일치하는행 삭제
+	 * - 삭제 실행후 로그아웃
+	 * - 인덱스로 이동
+	 * update member
+	 * - 비밀번호 입력창
+	 * - 세션값의 아이디와 입력한 비밀번호로 일치하는 데이터 호출
+	 * - 호출된데이터 있으면 그 행에 포함된 데이터 호출
+	 * - 수정폼 출력
+	 * - 수정완려
+	 * */
+	@PostMapping("/modifyMember")
+	public String modifyMember(Member member, HttpSession session) {
+		if(session.getAttribute("loginMember") ==null) {
+			return "redirect:/";
+		}
+		System.out.println("modify : "+member);
+		memberService.modifyMember(member);
+		return "home";
+	}
 	
-	
+	@GetMapping("/modifyMember")
+	public String modifyMember(HttpSession session, Model model) {
+		if(session.getAttribute("loginMember") ==null) {
+			return "redirect:/";
+		}
+		Member member = memberService.getMemberOne((LoginMember)(session.getAttribute("loginMember")));
+		model.addAttribute("member", member);
+		return "modifyMember";
+	}
+	@PostMapping("/removeMember")
+	public String removeMember(Member member, HttpSession session) {
+		if(session.getAttribute("loginMember") ==null) {
+			return "redirect:/";
+		}
+		System.out.println("remove : "+member);
+		memberService.removeMember(member);
+		session.invalidate();
+		return "index";
+	}
+	@GetMapping("/removeMember")
+	public String removeMember(HttpSession session) {
+		if(session.getAttribute("loginMember") ==null) {
+			return "redirect:/";
+		}
+		return "removeMember";
+	}
 	@GetMapping("/memberInfo")
 	public String memberInfo(HttpSession session, Model model) {
 		if(session.getAttribute("loginMember") ==null) {
