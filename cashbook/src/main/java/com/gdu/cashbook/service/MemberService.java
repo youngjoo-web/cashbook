@@ -14,6 +14,9 @@ public class MemberService {
 	@Autowired
 	private MemberMapper memberMapper;//private으로 mapper선언
 	
+	public Member getMemberOne(LoginMember loginMember) {
+		return memberMapper.selectMemberOne(loginMember);
+	}
 	public String checkMemberId(String memberIdCheck) {//회원가입시 아이디중복체크
 		return memberMapper.selectMemberId(memberIdCheck);
 	}

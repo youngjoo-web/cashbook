@@ -22,6 +22,17 @@ public class MemberController {
 	@Autowired
 	private MemberService memberService;
 	
+	
+	@GetMapping("/memberInfo")
+	public String memberInfo(HttpSession session, Model model) {
+		if(session.getAttribute("loginMember") ==null) {
+			return "redirect:/";
+		}
+		Member member = memberService.getMemberOne((LoginMember)(session.getAttribute("loginMember")));
+		System.out.println(member);
+		model.addAttribute("member", member);
+		return "memberInfo";
+	}
 	@PostMapping("/checkMemberId")//아이디 중복확인
 	public String checkMemberId(Model model, HttpSession session ,@RequestParam("memberIdCheck") String memberIdCheck) {
 		if(session.getAttribute("loginMember") !=null) {
@@ -55,7 +66,7 @@ public class MemberController {
 			return "login";
 		}else {//로그인성공(쿼리결과 있음)
 			session.setAttribute("loginMember", returnLoginMember);//세션값에 저장
-			return "redirect:/";
+			return "redirect:/home";
 		}	
 	}
 	@GetMapping("/logout")//세션값 초기화
