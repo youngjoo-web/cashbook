@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+
+<!-- jQuery library -->
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<!-- Popper JS -->
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+
+<!-- Latest compiled JavaScript -->
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+<script>
+	$(document).ready(function(){
+		$('#btn').click(function(){
+			$('#removeMember').submit();
+		});
+	});
+</script>
+</head>
+<body>
+	<h1>회원탈퇴</h1>
+	<form method="post" id="removeMember" action="/removeMember">
+		<div>
+			<input type="hidden" name="memberId" th:value="${session.loginMember.memberId}">
+			비밀번호입력
+			<input type="text" name="memberPw" id="memberPw">
+		</div>
+		<div>
+			<button type="button" id="btn" >제거</button>
+		</div>
+	</form>
+</body>
+</html>

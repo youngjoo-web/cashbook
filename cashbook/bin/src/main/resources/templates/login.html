@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+
+<!-- jQuery library -->
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<!-- Popper JS -->
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+
+<!-- Latest compiled JavaScript -->
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+<script>
+	$(document).ready(function(){
+		$('#btn').click(function(){
+			$('#myform').submit();
+		});
+	});
+</script>
+</head>
+<body>
+	<div class="row">
+	<div class="col-sm-5"></div>
+	<div class="col-sm-2">
+	<h1><center>로그인</center></h1>
+	
+	<form method="post" action="/login" id="myform">
+		<div>
+			member_id : <input type="text" id="memberId" name="memberId">
+		</div>
+		<br>
+		<div>
+			member_pw : <input type="password" id="memberPw" name="memberPw">
+		</div>
+		<br>
+		<div>
+			<button type="button" id="btn" class="btn-primary btn-block"> 로그인 </button>
+		</div>
+		
+	</form>
+	</div>
+	<div class="col-sm-5"></div>
+		
+	</div>
+</body>
+</html>

@@ -19,8 +19,8 @@
 <script
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
 <script>
-	$(document).ready(function(){
-		$('#btn').click(function(){
+	$(document).ready(function() {
+		$('#btn').click(function() {
 			$('#myform').submit();
 		});
 	});
@@ -28,27 +28,42 @@
 </head>
 <body>
 	<div class="row">
-	<div class="col-sm-5"></div>
-	<div class="col-sm-2">
-	<h1><center>로그인</center></h1>
-	
-	<form method="post" action="/login" id="myform">
-		<div>
-			member_id : <input type="text" id="memberId" name="memberId">
+		<div class="col-sm-4"></div>
+		<div class="col-sm-4">
+			<div style="padding: 100px 20px 0px 20px;">
+				<div class="card">
+					<div class="card-body">
+						<h1 align="center" style="padding: 20px;">로그인</h1>
+
+						<form method="post" action="/login" id="myform">
+							<div style="padding: 0px 50px 0px 50px;">
+								<input type="text" id="memberId" name="memberId" class="form-control" placeholder="아이디">
+							</div>
+							<br>
+							<div style="padding: 0px 50px 0px 50px;">
+								<input type="password" id="memberPw" name="memberPw" class="form-control" placeholder="비밀번호">
+							</div>
+							<br>
+							<div align="center">
+								<a href="">아이디와 비밀번호가 기억나지 않아요.</a>
+							</div>
+							<br>
+							<div style="padding: 0px 50px 0px 50px;">
+								<button type="button" id="btn" class="btn btn-primary btn-block">
+									로그인</button>
+							</div>
+							<br>
+							<div style="padding: 0px 50px 50px 50px;">
+								<a href="/addMember" class="btn btn-primary btn-block">회원가입</a>
+							</div>				
+						</form>
+					</div>
+				</div>
+
+			</div>
 		</div>
-		<br>
-		<div>
-			member_pw : <input type="password" id="memberPw" name="memberPw">
-		</div>
-		<br>
-		<div>
-			<button type="button" id="btn" class="btn-primary btn-block"> 로그인 </button>
-		</div>
-		
-	</form>
-	</div>
-	<div class="col-sm-5"></div>
-		
+		<div class="col-sm-4"></div>
+
 	</div>
 </body>
 </html>

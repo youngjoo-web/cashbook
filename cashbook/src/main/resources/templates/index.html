@@ -22,24 +22,30 @@
 </head>
 <body>
 	<div class="row">
-	<div class="col"></div>
-	<div class="col">
-		<h1 align="center" th:text="가계부"></h1>
-		<br>
-		<br>		
-		<div th:if="${session.loginMember != null}"><!-- 로그인이 되어있을시 -->
-			<a href="/logout" class="btn btn-primary btn-block">로그아웃</a>
-		</div>
-		<div th:if="${session.loginMember == null}"><!-- 로그인이 되어있지 않을시 -->
-			<a href="/login" class="btn btn-primary btn-block">로그인</a>
-		<br>
-		<br>
-			<a href="/addMember" class="btn btn-primary btn-block">회원가입</a>
+		<div class="col-sm-5"></div>
+		<div class="col-sm-2">
+			<div>
+				<h1 align="center" th:text="가계부"
+					style="padding: 100px 0px 50px 0px;"></h1>
+				<h2 align="center" th:text="시작하기"></h2>
+				<br> <br>
+				<div th:if="${session.loginMember != null}">
+					<!-- 로그인이 되어있을시 -->
+					<a href="/logout" class="btn btn-primary btn-block">로그아웃</a>
+				</div>
+				<div th:if="${session.loginMember == null}">
+					<!-- 로그인이 되어있지 않을시 -->
+					<a href="/login" class="btn btn-primary btn-block">로그인</a> <br>
+					<br> <a href="/addMember" class="btn btn-primary btn-block">회원가입</a>
+				</div>
+			</div>
+			<div class="col-sm-5"></div>
 		</div>
 	</div>
-	<div class="col"></div>
-		
-	</div>
-
+	<h6 align="center" style="padding: 100px 0px 0px 0px;">본 콘텐츠의 저작권은
+		제공처에 있으며, 이를 무단 이용하는 경우 저작권법 등에 따라 법적 책임을 질 수 있습니다.</h6>
+	<h5 align="center" style="padding: 20px;">Copyright © JWsoft Corp.
+		All Rights Reserved.</h5>
+	<h4 align="right" style="padding: 20px;">ver 1.0</h4>
 </body>
 </html>
