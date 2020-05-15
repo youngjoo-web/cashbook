@@ -31,31 +31,15 @@
 
 	$(document).ready(function() {
 		$('#idBtn').click(function() {
+			if($('#memberIdCheck').val().length < 4) {
+				$('#memberIdCheckHelper').text("id 4자이상");
+				$('#memberIdCheck').focus();
+				return;
+			}
 			$('#idForm').submit();
 		});
 		$('#btn').click(function() {//버튼 클릭시 실행 되는 자바스크립트
-			/*if($('#memberId').val().length < 4){
-				helperInit();
-				let msg = "ID는 4자이상"
-				$('#idHelper').text(msg);
-				$('#memberId').focus();
-			}else if($('#memberPw').val().length < 4){
-				helperInit();
-					$('#pwHelper').text("비밀번호를4자이상");
-					$('#memberPw').focus();
-			}else if($('#memberPw').val() != $('#memberPw2').val()){
-				helperInit();
-				$('#pw2Helper').text("비밀번호 불일치");
-				$('#memberPw2').focus();
-			}else if($('#memberName').val().length < 4){
-				helperInit();
-				$('#nameHelper').text("이름을 입력");
-				$('#memberName').focus();
-			}else if($('#memberPhone').val().length ===0){
-				helperInit();
-				$('#phoneHelper').text("전화번호를 입력");
-				$('#memberPhone').focus();
-			}*/
+			
 			if ($('#memberId').val().length < 4) {
 				helperInit();
 				$('#idHelper').text("아이디4자이상");
@@ -118,7 +102,7 @@
 											</div>
 										</div>
 
-
+										<span id="memberIdCheckHelper"></span>
 										<span th:text="${msg}"></span>
 									</div>
 								</div>

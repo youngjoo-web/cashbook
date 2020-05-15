@@ -7,11 +7,7 @@ public class Member {
 	private String memberAddr;
 	private String memberPhone;
 	private String memberEmail;
-	@Override
-	public String toString() {//입력값을 클래스로 출력
-		return "Member [memberId=" + memberId + ", memberPw=" + memberPw + ", memberName=" + memberName
-				+ ", memberAddr=" + memberAddr + ", memberPhone=" + memberPhone + ", memberEmail=" + memberEmail + "]";
-	}
+	private String memberPic;
 	public String getMemberId() {
 		return memberId;
 	}
@@ -48,4 +44,26 @@ public class Member {
 	public void setMemberEmail(String memberEmail) {
 		this.memberEmail = memberEmail;
 	}
+	public String getMemberPic() {
+		return memberPic;
+	}
+	public void setMemberPic(String memberPic) {
+		this.memberPic = memberPic;
+	}
+	@Override
+	public String toString() {
+		return "Member [memberId=" + memberId + ", memberPw=" + memberPw + ", memberName=" + memberName
+				+ ", memberAddr=" + memberAddr + ", memberPhone=" + memberPhone + ", memberEmail=" + memberEmail
+				+ ", memberPic=" + memberPic + "]";
+	}
+	
 }
+
+
+
+
+
+
+
+
+

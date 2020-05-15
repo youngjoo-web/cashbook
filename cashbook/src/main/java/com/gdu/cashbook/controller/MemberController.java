@@ -34,14 +34,49 @@ public class MemberController {
 	 * - 수정폼 출력
 	 * - 수정완려
 	 * */
+	@PostMapping("/findMemberPw")
+	public String findMemberPw(HttpSession session, Model model, Member member) {
+		int row = memberService.getMemberPw(member);
+		String msg = "아이디와 메일을 확인하세요";
+		if(row == 1) {
+			msg = "비밀번호를 입력한 메일로 전송하였습니다";
+		}
+		model.addAttribute("msg", msg);
+		return "memberPwView";
+	}
+	@GetMapping("/findMemberPw")
+	public String findMemberPw(HttpSession session) {
+		if(session.getAttribute("loginMember") != null) {
+			return "redirect:/";
+		}
+		return "findMemberPw";
+	}
+	
+	@GetMapping("/findMemberId")
+	public String findMemberId(HttpSession session) {
+		if(session.getAttribute("loginMember") != null) {
+			return "redirect:/";
+		}
+		return "findMemberId";
+	}
+	@PostMapping("/findMemberId")
+	public String findMemberId(HttpSession session, Model model, Member member) {
+		if(session.getAttribute("loginMember") != null) {
+			return "redirect:/";
+		}
+		String memberIdPart = memberService.getMemberIdByMember(member);
+		System.out.println(memberIdPart+"<--memberIdPart");
+		model.addAttribute("memberIdPart", memberIdPart);
+		return "memberIdView";
+	}
+	
 	@PostMapping("/modifyMember")
 	public String modifyMember(Member member, HttpSession session) {
 		if(session.getAttribute("loginMember") ==null) {
 			return "redirect:/";
 		}
-		System.out.println("modify : "+member);
-		memberService.modifyMember(member);
-		return "home";
+		System.out.println(member);
+		return "redirect:/";
 	}
 	
 	@GetMapping("/modifyMember")
@@ -54,12 +89,12 @@ public class MemberController {
 		return "modifyMember";
 	}
 	@PostMapping("/removeMember")
-	public String removeMember(Member member, HttpSession session) {
+	public String removeMember(LoginMember loginMember, HttpSession session) {
 		if(session.getAttribute("loginMember") ==null) {
 			return "redirect:/";
 		}
-		System.out.println("remove : "+member);
-		memberService.removeMember(member);
+		System.out.println("remove : "+loginMember);
+		memberService.removeMember(loginMember);
 		session.invalidate();
 		return "index";
 	}
