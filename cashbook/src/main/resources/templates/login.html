@@ -19,9 +19,25 @@
 <script
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
 <script>
+	let helperInit = function() {//입력 오류 헬퍼
+		$('#loginIdHelper').text("");
+		$('#loginPwHelper').text("");
+	};
+
 	$(document).ready(function() {
 		$('#btn').click(function() {
-			$('#myform').submit();
+			if ($('#memberId').val().length === 0) {
+				helperInit();
+				$('#loginIdHelper').text("아이디를 입력하세요");
+				$('#memberId').focus();
+			} else if ($('#memberPw').val().length === 0) {
+				helperInit();
+				$('#loginPwHelper').text("비밀번호를  입력하세요");
+				$('#memberPw').focus();
+			} else {
+				$('#myform').submit();
+			}
+
 		});
 	});
 </script>
@@ -37,11 +53,18 @@
 
 						<form method="post" action="/login" id="myform">
 							<div style="padding: 0px 50px 0px 50px;">
-								<input type="text" id="memberId" name="memberId" class="form-control" placeholder="아이디">
+								<input type="text" id="memberId" name="memberId"
+									class="form-control" placeholder="아이디"> <span
+									id="loginIdHelper"></span>
 							</div>
 							<br>
 							<div style="padding: 0px 50px 0px 50px;">
-								<input type="password" id="memberPw" name="memberPw" class="form-control" placeholder="비밀번호">
+								<input type="password" id="memberPw" name="memberPw"
+									class="form-control" placeholder="비밀번호"> <span
+									id="loginPwHelper"></span>
+							</div>
+							<div>
+								<span id="loginHelper"></span>
 							</div>
 							<br>
 							<div align="center">
@@ -58,7 +81,7 @@
 							<br>
 							<div style="padding: 0px 50px 50px 50px;">
 								<a href="/addMember" class="btn btn-primary btn-block">회원가입</a>
-							</div>				
+							</div>
 						</form>
 					</div>
 				</div>
