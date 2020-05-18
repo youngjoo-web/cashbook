@@ -14,7 +14,15 @@
 		WHERE member_id = #{memberId}
 		AND member_email = #{memberEmail}
 	</update>
-	
+	<update id="updateMember" parameterType="com.gdu.cashbook.vo.Member">
+		UPDATE member 
+		SET member_name = #{memberName}
+		SET member_addr = #{memberAddr}
+		SET member_phone = {memberPhone}
+		SET member_email = #{memberEmail})
+		SET member_pic = #{memberPic}
+		WHERE member_id = #{memberId}
+	</update>
 	<select id="selectMemberIdByMember" parameterType="com.gdu.cashbook.vo.Member" resultType="String">
 		SELECT
 			CONCAT(SUBSTRING(member_id, 1, 3), '****')

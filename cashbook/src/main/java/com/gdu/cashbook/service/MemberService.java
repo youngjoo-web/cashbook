@@ -1,6 +1,7 @@
 package com.gdu.cashbook.service;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -63,22 +64,53 @@ public class MemberService {
 			}
 		}
 		
-		
-		
 	}
 	
-	public Member getMemberOne(LoginMember loginMember) {
-		return memberMapper.selectMemberOne(loginMember);
+	public void modifyMember(MemberForm memberForm) {
+		/*
+		 * 멤버수정service
+		 * 1. memberForm 받아오기
+		 * 2. mapper.selectMemberOne 으로 기존의 파일이름 불러오기
+		 * 3. 기존의 파일이름이 default.jpg 가 아니면 파일삭제
+		 * 4. memberForm의 값으로 데이터 수정하는 쿼리문작성
+		 * 5. memberInfo페이지로 이동
+		 * */
+		System.out.println(memberForm+"memberService");
+		String memberId = memberForm.getMemberId();
+		LoginMember loginMember = new LoginMember();
+		loginMember.setMemberId(memberId);
+		Member member = memberMapper.selectMemberOne(loginMember);
+		if(member.getMemberPic().equals("default.jpg")){
+			System.out.println("기존사진없음");
+		}else {
+			File file = new File(path +"//"+member.getMemberPic());
+			try {
+				file.delete();
+			}catch(Exception e){
+				e.printStackTrace();
+			}
+		}
+		MultipartFile mf = memberForm.getMemberPic();
+		String originName = mf.getOriginalFilename();
+		int lastDot = originName.lastIndexOf(".");
+		String extension = originName.substring(lastDot);
+		String memberPic = memberForm.getMemberId()+extension;
+		File file = new File(path+"\\"+memberPic);
+		try {
+			mf.transferTo(file);
+		} catch (IllegalStateException | IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		member.setMemberAddr(memberForm.getMemberAddr());
+		member.setMemberEmail(memberForm.getMemberEmail());
+		member.setMemberId(memberForm.getMemberId());
+		member.setMemberPhone(memberForm.getMemberPhone());
+		member.setMemberPw(memberForm.getMemberPw());
+		member.setMemberName(memberForm.getMemberName());
+		member.setMemberPic(memberPic);
+		memberMapper.updateMember(member);
 	}
-	
-	public String checkMemberId(String memberIdCheck) {
-		return memberMapper.selectMemberId(memberIdCheck); // null, member_id
-	}
-	
-	public LoginMember login(LoginMember loginMember) {
-		return memberMapper.selectLoginMember(loginMember);
-	}
-	
 	public int addMember(MemberForm memberForm) {
 		Member member = new Member();
 		File file = null;
@@ -117,5 +149,17 @@ public class MemberService {
 			// 2. 예외처리 할필요 없는 예외 ex)RuntimeException
 		//return memberMapper.insertMember(member);
 		return row;
+	}
+	
+	public Member getMemberOne(LoginMember loginMember) {
+		return memberMapper.selectMemberOne(loginMember);
+	}
+	
+	public String checkMemberId(String memberIdCheck) {
+		return memberMapper.selectMemberId(memberIdCheck); // null, member_id
+	}
+	
+	public LoginMember login(LoginMember loginMember) {
+		return memberMapper.selectLoginMember(loginMember);
 	}
 }

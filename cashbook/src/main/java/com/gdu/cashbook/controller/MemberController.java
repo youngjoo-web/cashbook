@@ -72,12 +72,13 @@ public class MemberController {
 	}
 	
 	@PostMapping("/modifyMember")
-	public String modifyMember(Member member, HttpSession session) {
+	public String modifyMember(MemberForm memberForm, HttpSession session) {
 		if(session.getAttribute("loginMember") ==null) {
 			return "redirect:/";
 		}
-		System.out.println(member);
-		return "redirect:/";
+		System.out.println(memberForm);
+		memberService.modifyMember(memberForm);
+		return "redirect:/memberInfo";
 	}
 	
 	@GetMapping("/modifyMember")
