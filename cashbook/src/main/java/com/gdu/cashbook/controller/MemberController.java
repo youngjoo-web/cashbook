@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.gdu.cashbook.service.MemberService;
 import com.gdu.cashbook.vo.LoginMember;
 import com.gdu.cashbook.vo.Member;
+import com.gdu.cashbook.vo.MemberForm;
 
 @Controller
 public class MemberController {
@@ -164,9 +165,17 @@ public class MemberController {
 		return "addMember";
 	}
 	@PostMapping("/addMember")
-	public String addMember(Member member) {//입력폼에서 받아온 데이터(post) ----->데이터베이스로 이동
-		System.out.println(member);
-		memberService.addMember(member);
+	public String addMember(MemberForm memberForm, HttpSession session) {//입력폼에서 받아온 데이터(post) ----->데이터베이스로 이동
+		if(session.getAttribute("loginMember") !=null) {
+			return "redirect:/";
+		}
+		System.out.println("memberForm"+memberForm);
+		//System.out.println(member);
+		memberService.addMember(memberForm);
+		/*
+		 * memberService <---- memberForm
+		 * service : member폴더에 파일 저장
+		 * */
 		return "redirect:/index";
 	}
 }
