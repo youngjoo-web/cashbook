@@ -90,17 +90,23 @@ public class MemberService {
 				e.printStackTrace();
 			}
 		}
-		MultipartFile mf = memberForm.getMemberPic();
+		File file = null;
+		String memberPic = null;
+		MultipartFile mf =null;
+		try {
+		mf = memberForm.getMemberPic();
 		String originName = mf.getOriginalFilename();
+		System.out.println(originName+"<----originName");
 		int lastDot = originName.lastIndexOf(".");
 		String extension = originName.substring(lastDot);
-		String memberPic = memberForm.getMemberId()+extension;
-		File file = new File(path+"\\"+memberPic);
-		try {
-			mf.transferTo(file);
-		} catch (IllegalStateException | IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		memberPic = memberForm.getMemberId()+extension;
+		member.setMemberPic(memberPic);
+		
+		file = new File(path+"\\"+memberPic);
+		mf.transferTo(file);
+		}catch(Exception e) {
+		e.printStackTrace();
+		member.setMemberPic("default.jpg");
 		}
 		member.setMemberAddr(memberForm.getMemberAddr());
 		member.setMemberEmail(memberForm.getMemberEmail());
@@ -108,7 +114,6 @@ public class MemberService {
 		member.setMemberPhone(memberForm.getMemberPhone());
 		member.setMemberPw(memberForm.getMemberPw());
 		member.setMemberName(memberForm.getMemberName());
-		member.setMemberPic(memberPic);
 		memberMapper.updateMember(member);
 	}
 	public int addMember(MemberForm memberForm) {

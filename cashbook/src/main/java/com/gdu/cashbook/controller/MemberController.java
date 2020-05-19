@@ -76,8 +76,8 @@ public class MemberController {
 		if(session.getAttribute("loginMember") ==null) {
 			return "redirect:/";
 		}
-		System.out.println(memberForm);
-		memberService.modifyMember(memberForm);
+		System.out.println(memberForm+"<----memberForm");
+		//memberService.modifyMember(memberForm);
 		return "redirect:/memberInfo";
 	}
 	
