@@ -11,11 +11,28 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
 <!-- Latest compiled JavaScript -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+<style>
+	#aside {
+	width: 200px;
+	height: 3000px;
+	position: fixed;
+	background: blue;
+	overflow: hidden;
+	float: left;
+}
+</style>
 </head>
 <body>
-	<h1>가게부리스트</h1>
-	<h2  th:text="${today}"></h2>
-	<table class="table">
+	<div id="aside" th:include="/include/menu::sidemenu"></div>
+	<h1 align="center">가게부리스트</h1>
+	<h2  th:text="${day}" align="center"></h2>
+	<div class="row">
+		<div class="col-sm-3"></div>
+		<div class="col-sm-6">
+			<div align="center" >
+		<a th:href="@{/getCashListByDate(day=${day.plusDays(-1)})}">이전</a>
+		<a th:href="@{/getCashListByDate(day=${day.plusDays(1)})}">다음</a>
+		<table class="table" >
 		<thead>
 			<tr>
 				<td>id</td>
@@ -39,5 +56,15 @@
 			</tr>
 		</tbody>
 	</table>
+	</div>
+		
+		</div>
+		<div class="col-sm-3"></div>
+	</div>
+	
+	<div align="right" style="padding: 50px;">
+		<h2 th:text="${sum}"></h2><h2>원</h2>
+	</div>
+	
 </body>
 </html>
