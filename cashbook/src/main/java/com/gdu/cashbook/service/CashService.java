@@ -20,4 +20,13 @@ public class CashService {
 		list = cashMapper.selectCashListByDate(cash);
 		return list;
 	}
+	public int getCashKindSum(Cash cash) {
+		int sum=0;
+		try {
+			sum = cashMapper.selectCashKindSum(cash);
+		}catch(Exception e) {
+			sum=0;
+		}
+		return sum;
+	}
 }

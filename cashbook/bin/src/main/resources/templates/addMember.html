@@ -23,6 +23,7 @@
 		$('#idHelper').text("");
 		$('#pwHelper').text("");
 		$('#pw2Helper').text("");
+		$('#picHelper').text("");
 		$('#nameHelper').text("");
 		$('#addrHelper').text("");
 		$('#phoneHelper').text("");
@@ -52,7 +53,11 @@
 				helperInit();
 				$('#pw2Helper').text("비밀번호 불일치");
 				$('#memberPw2').focus();
-			} else if ($('#memberName').val().length === 0) {
+			} /*else if ($('#picture').val().length === 0) {
+				helperInit();
+				$('#picHelper').text("파일을 선택");
+				$('#picture').focus();
+			} */else if ($('#memberName').val().length === 0) {
 				helperInit();
 				$('#nameHelper').text("이름을 입력");
 				$('#memberName').focus();
@@ -110,7 +115,7 @@
 							</div>
 
 						</form>
-						<form id="myform" method="post" action="/addMember">
+						<form id="myform" method="post" action="/addMember" enctype="multipart/form-data">
 							<div class="row">
 								<div class="col-sm-2"></div>
 								<div class="col-sm-8">
@@ -130,6 +135,10 @@
 										비밀번호확인<br>
 										<input type="text" id="memberPw2" class="form-control"
 											placeholder="비밀번호 확인"> <span id="pw2Helper"></span>
+									</div>
+									<div align="left">
+										사진<br>
+										<input type="file" id="picture" name="memberPic"> <span id="picHelper"></span>
 									</div>
 									<div align="left">
 										사용자 이름<br>

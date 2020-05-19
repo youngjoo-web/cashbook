@@ -25,10 +25,28 @@
 		});
 	});
 </script>
+<style>
+	#aside {
+	width: 200px;
+	height: 3000px;
+	position: fixed;
+	background: blue;
+	overflow: hidden;
+	float: left;
+}
+</style>
 </head>
 <body>
-	<h1>회원정보수정</h1>
-	<form method="post" id="modifyMember" action="/modifyMember">
+	<div id="aside" th:include="/include/menu::sidemenu"></div>
+	<div class="container"> 
+	<h1 align="center">회원정보수정</h1>
+	<form method="post" id="modifyMember" action="/modifyMember" enctype="multipart/form-data">
+		<div>
+			사진<input type="file" name="memberPic" th:value="${member.memberPic}">
+		</div>
+		<div>
+			<img th:src="@{${'/upload/'+member.memberPic}}">
+		</div>
 		<div>
 			이름<br><input type="text" name="memberName" id="memberName" th:value="${member.memberName}">
 		</div>
@@ -51,5 +69,6 @@
 			<button type="button" id="btn" >수정</button>
 		</div>
 	</form>
+	</div>
 </body>
 </html>

@@ -23,7 +23,7 @@ public class MemberService {
 	
 	@Autowired private MemberMapper memberMapper;
 	@Autowired private MemberidMapper memberidMapper;
-	@Value("D:\\byjava\\byjWork\\cashbook\\cashbook\\src\\main\\resources\\static\\upload") 
+	@Value("C:\\Users\\GDJ2\\git\\cashbook\\cashbook\\src\\main\\resources\\static\\upload") 
 	private String path;
 	public int getMemberPw(Member member) { // id&email
 		// pw추가
@@ -77,37 +77,56 @@ public class MemberService {
 		 * */
 		System.out.println(memberForm+"memberService");
 		String memberId = memberForm.getMemberId();
+		String memberPw = memberForm.getMemberPw();
 		LoginMember loginMember = new LoginMember();
 		loginMember.setMemberId(memberId);
+		loginMember.setMemberPw(memberPw);
 		Member member = memberMapper.selectMemberOne(loginMember);
-		if(member.getMemberPic().equals("default.jpg")){
-			System.out.println("기존사진없음");
-		}else {
-			File file = new File(path +"//"+member.getMemberPic());
-			try {
-				file.delete();
-			}catch(Exception e){
-				e.printStackTrace();
-			}
-		}
+		
 		File file = null;
 		String memberPic = null;
 		MultipartFile mf =null;
-		try {
+		
 		mf = memberForm.getMemberPic();
 		String originName = mf.getOriginalFilename();
-		System.out.println(originName+"<----originName");
-		int lastDot = originName.lastIndexOf(".");
-		String extension = originName.substring(lastDot);
-		memberPic = memberForm.getMemberId()+extension;
-		member.setMemberPic(memberPic);
 		
-		file = new File(path+"\\"+memberPic);
-		mf.transferTo(file);
-		}catch(Exception e) {
-		e.printStackTrace();
-		member.setMemberPic("default.jpg");
+		System.out.println(originName+"<----originName");
+		if(originName.equals("")) {
+			System.out.println("사진선택안함");
+		}else {
+			if(member.getMemberPic().equals("default.jpg")){
+				System.out.println(member.getMemberPic()+"기존이미지");
+			}else {
+				File update = new File(path +"//"+member.getMemberPic());
+				try {
+					update.delete();
+				}catch(Exception e){
+					e.printStackTrace();
+				}
+			}
+			int lastDot = originName.lastIndexOf(".");
+			String extension = originName.substring(lastDot);
+			System.out.println(extension+"확장자이름");
+			memberPic = memberForm.getMemberId()+extension;
+			System.out.println(memberPic+"저장될프로필사진이름");
+			member.setMemberPic(memberPic);
+			
+			file = new File(path+"\\"+memberPic);
+			try {
+				mf.transferTo(file);
+			} catch (IllegalStateException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
+		
+		
+		
+		
+		
 		member.setMemberAddr(memberForm.getMemberAddr());
 		member.setMemberEmail(memberForm.getMemberEmail());
 		member.setMemberId(memberForm.getMemberId());

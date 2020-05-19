@@ -14,7 +14,15 @@
 		WHERE member_id = #{memberId}
 		AND member_email = #{memberEmail}
 	</update>
-	
+	<update id="updateMember" parameterType="com.gdu.cashbook.vo.Member">
+		UPDATE member 
+		SET member_name = #{memberName},
+			member_addr = #{memberAddr},
+			member_phone = #{memberPhone},
+			member_email = #{memberEmail},
+			member_pic = #{memberPic}
+		WHERE member_id = #{memberId}
+	</update>
 	<select id="selectMemberIdByMember" parameterType="com.gdu.cashbook.vo.Member" resultType="String">
 		SELECT
 			CONCAT(SUBSTRING(member_id, 1, 3), '****')
@@ -27,7 +35,7 @@
 	<delete id="deleteMember" parameterType="com.gdu.cashbook.vo.LoginMember">
 		DELETE FROM member
 		WHERE member_id = #{memberId}
-		AND	member_pw = #{memberPw}
+		AND	member_pw = PASSWORD(#{memberPw})
 	</delete>
 
 	<select id="selectMemberOne" parameterType="com.gdu.cashbook.vo.LoginMember" resultType="com.gdu.cashbook.vo.Member">
@@ -68,14 +76,16 @@
 			member_name,
 			member_addr,
 			member_phone,
-			member_email
+			member_email,
+			member_pic
 		) VALUES (
 			#{memberId},
 			PASSWORD(#{memberPw}),
 			#{memberName},
 			#{memberAddr},
 			#{memberPhone},
-			#{memberEmail}
+			#{memberEmail},
+			#{memberPic}
 		)
 	</insert>
 </mapper>

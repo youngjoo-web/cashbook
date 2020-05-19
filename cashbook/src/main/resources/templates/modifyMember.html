@@ -38,11 +38,13 @@
 </head>
 <body>
 	<div id="aside" th:include="/include/menu::sidemenu"></div>
-	<div class="container"> 
-	<h1 align="center">회원정보수정</h1>
+	<div class="row"> 
+	<div class="col-sm-3"></div>
+	<div class="col-sm-6" align="center">
+		<h1 align="center">회원정보수정</h1>
 	<form method="post" id="modifyMember" action="/modifyMember" enctype="multipart/form-data">
 		<div>
-			사진<input type="file" name="memberPic" th:value="${member.memberPic}">
+			사진<input type="file" name="memberPic" value="">
 		</div>
 		<div>
 			<img th:src="@{${'/upload/'+member.memberPic}}">
@@ -69,6 +71,10 @@
 			<button type="button" id="btn" >수정</button>
 		</div>
 	</form>
+	
+	</div>
+	<div class="col-sm-3"></div>
+	
 	</div>
 </body>
 </html>

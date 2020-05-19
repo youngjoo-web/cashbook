@@ -10,4 +10,5 @@ import com.gdu.cashbook.vo.Cash;
 @Mapper
 public interface CashMapper {
 	public ArrayList<Cash> selectCashListByDate(Cash cash);
+	public int selectCashKindSum(Cash cash);
 }
