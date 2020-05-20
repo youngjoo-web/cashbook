@@ -8,11 +8,11 @@
 	1. 사용자 입력한 id와email일치하면 pw변경(랜덤문자열) update
 	2. 2번에서 입력한 pw를 메일로 전송
 	-->
-	<update id="updateMemberPw" parameterType="com.gdu.cashbook.vo.Member">
+	<update id="updateMemberPw" parameterType="java.util.Map">
 		UPDATE member 
-		SET member_pw = PASSWORD(#{memberPw})
+		SET member_pw = PASSWORD(#{memberPw2})
 		WHERE member_id = #{memberId}
-		AND member_email = #{memberEmail}
+		AND member_Pw = PASSWORD(#{memberPw1})
 	</update>
 	<update id="updateMember" parameterType="com.gdu.cashbook.vo.Member">
 		UPDATE member 

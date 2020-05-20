@@ -16,25 +16,44 @@ import com.gdu.cashbook.service.MemberService;
 import com.gdu.cashbook.vo.LoginMember;
 import com.gdu.cashbook.vo.Member;
 import com.gdu.cashbook.vo.MemberForm;
+import com.gdu.cashbook.vo.ModifyPw;
 
 @Controller
 public class MemberController {
 	
 	@Autowired
 	private MemberService memberService;
+	@GetMapping("/modifyPw")
+	public String modifyPw(HttpSession session) {
+		if(session.getAttribute("loginMember") == null) {
+			return "redirect:/";
+		}
+		return "modifyPw";
+	}
 	/*
-	 * remove member
-	 * - 비밀번호 입력창
-	 * - 입력받은 비밀번호와 세션값의 아이디로 일치하는행 삭제
-	 * - 삭제 실행후 로그아웃
-	 * - 인덱스로 이동
-	 * update member
-	 * - 비밀번호 입력창
-	 * - 세션값의 아이디와 입력한 비밀번호로 일치하는 데이터 호출
-	 * - 호출된데이터 있으면 그 행에 포함된 데이터 호출
-	 * - 수정폼 출력
-	 * - 수정완려
+	 * 비밀번호 변경
+	 * - 비밀번호변경폼으로 이동
+	 * - 사용하고있는 비밀번호 입력
+	 * - 변경할 비밀번호 입력
+	 * - 변경할 비밀번호 확인 입력
+	 * - submit버튼 클릭
+	 * - 유효성검사
+	 * 	1. 사용하고있는 비밀번호를 입력했는가?
+	 * 	2. 변경할비밀번호를 입력했는가?
+	 * 	3. 변경할비밀번호 확인을 입력했는가?
+	 * 	4. 변경할비밀번호와 변경할비밀번호확인이 일치하는가?
 	 * */
+	@PostMapping("/modifyPw")
+	public String modifyPw(HttpSession session, ModifyPw modifyPw) {
+		System.out.println(modifyPw+"<----modifyPw");
+		LoginMember loginMember = (LoginMember)session.getAttribute("loginMember");
+		String memberId = loginMember.getMemberId();
+		System.out.println(memberId);
+		String memberPw1=modifyPw.getMemberPw1();
+		String memberPw2=modifyPw.getMemberPw2();
+		memberService.modifyPw(memberId, memberPw1, memberPw2);
+		return "redirect:/memberInfo";
+	}
 	@PostMapping("/findMemberPw")
 	public String findMemberPw(HttpSession session, Model model, Member member) {
 		int row = memberService.getMemberPw(member);
@@ -80,6 +99,19 @@ public class MemberController {
 		memberService.modifyMember(memberForm);
 		return "redirect:/memberInfo";
 	}
+	/*
+	 * remove member
+	 * - 비밀번호 입력창
+	 * - 입력받은 비밀번호와 세션값의 아이디로 일치하는행 삭제
+	 * - 삭제 실행후 로그아웃
+	 * - 인덱스로 이동
+	 * update member
+	 * - 비밀번호 입력창
+	 * - 세션값의 아이디와 입력한 비밀번호로 일치하는 데이터 호출
+	 * - 호출된데이터 있으면 그 행에 포함된 데이터 호출
+	 * - 수정폼 출력
+	 * - 수정완려
+	 * */
 	
 	@GetMapping("/modifyMember")
 	public String modifyMember(HttpSession session, Model model) {

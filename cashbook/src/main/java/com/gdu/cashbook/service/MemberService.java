@@ -2,6 +2,8 @@ package com.gdu.cashbook.service;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,12 +27,19 @@ public class MemberService {
 	@Autowired private MemberidMapper memberidMapper;
 	@Value("C:\\Users\\GDJ2\\git\\cashbook\\cashbook\\src\\main\\resources\\static\\upload") 
 	private String path;
+	public int modifyPw(String memberId, String memberPw1, String memberPw2) {
+		Map<String, Object> map = new HashMap<>();
+		map.put("memberId", memberId);
+		map.put("memberPw1", memberPw1);
+		map.put("memberPw2", memberPw2);
+		return memberMapper.updateMemberPw(map);
+	}
 	public int getMemberPw(Member member) { // id&email
 		// pw추가
 		UUID uuid = UUID.randomUUID(); // 랜덤문자열 생성 라이브러리(API)
 		String memberPw = uuid.toString().substring(0, 8);
 		member.setMemberPw(memberPw);
-		int row = memberMapper.updateMemberPw(member);
+		int row = 1;
 		if(row == 1) {
 			System.out.println(memberPw+"<--update memberPw");
 			// 메일로 update성공한 랜덤 pw를 전송

@@ -4,15 +4,19 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <!-- Latest compiled and minified CSS -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
 <!-- jQuery library -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <!-- Popper JS -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
 <!-- Latest compiled JavaScript -->
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
 <style>
-	#aside {
+#aside {
 	width: 200px;
 	height: 3000px;
 	position: fixed;
@@ -23,48 +27,52 @@
 </style>
 </head>
 <body>
-	<div id="aside" th:include="/include/menu::sidemenu"></div>
-	<h1 align="center">가게부리스트</h1>
-	<h2  th:text="${day}" align="center"></h2>
+	
+
 	<div class="row">
-		<div class="col-sm-3"></div>
-		<div class="col-sm-6">
-			<div align="center" >
-		<a th:href="@{/getCashListByDate(day=${day.plusDays(-1)})}">이전</a>
-		<a th:href="@{/getCashListByDate(day=${day.plusDays(1)})}">다음</a>
-		<table class="table" >
-		<thead>
-			<tr>
-				<td>id</td>
-				<td>date</td>
-				<td>kind</td>
-				<td>category</td>
-				<td>price</td>
-				<td>place</td>
-				<td>memo</td>
-			</tr>
-		</thead>
-		<tbody>
-			<tr th:each="cashList : ${cashList}" >				
-					<td th:text="${cashList.memberId}"></td>
-					<td th:text="${cashList.cashDate}"></td>
-					<td th:text="${cashList.cashKind}"></td>
-					<td th:text="${cashList.categoryName}"></td>
-					<td th:text="${cashList.cashPrice}"></td>
-					<td th:text="${cashList.cashPlace}"></td>
-					<td th:text="${cashList.cashMemo}"></td>
-			</tr>
-		</tbody>
-	</table>
-	</div>
-		
+		<div class="col-sm-2">
+		<div id="aside" th:include="/include/menu::sidemenu"></div>
 		</div>
-		<div class="col-sm-3"></div>
+		<div class="col-sm-10">
+			<h1 align="center">가게부리스트</h1>
+			<h2 th:text="${day}" align="center"></h2>
+			<div align="center">
+				<a th:href="@{/getCashListByDate(day=${day.plusDays(-1)})}">이전</a> <a
+					th:href="@{/getCashListByDate(day=${day.plusDays(1)})}">다음</a>
+				<table class="table">
+					<thead>
+						<tr>
+							<td>id</td>
+							<td>date</td>
+							<td>kind</td>
+							<td>category</td>
+							<td>price</td>
+							<td>place</td>
+							<td>memo</td>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="cashList : ${cashList}">
+							<td th:text="${cashList.memberId}"></td>
+							<td th:text="${cashList.cashDate}"></td>
+							<td th:text="${cashList.cashKind}"></td>
+							<td th:text="${cashList.categoryName}"></td>
+							<td th:text="${cashList.cashPrice}"></td>
+							<td th:text="${cashList.cashPlace}"></td>
+							<td th:text="${cashList.cashMemo}"></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+
+		</div>
+		
 	</div>
-	
+
 	<div align="right" style="padding: 50px;">
-		<h2 th:text="${sum}"></h2><h2>원</h2>
+		<h2 th:text="${sum}"></h2>
+		<h2>원</h2>
 	</div>
-	
+
 </body>
 </html>
