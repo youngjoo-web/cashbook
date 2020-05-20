@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+
+<!-- jQuery library -->
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<!-- Popper JS -->
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+
+<!-- Latest compiled JavaScript -->
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+<script>
+	let helperInit = function() {//입력 오류 헬퍼
+		
+		$('#pw1Helper').text("");
+		$('#pw2Helper').text("");
+		$('#pw3Helper').text("");
+	};
+
+	$(document).ready(function() {
+		
+		$('#btn').click(function() {//버튼 클릭시 실행 되는 자바스크립트
+			
+			if ($('#memberPw1').val().length === 0) {
+				helperInit();
+				$('#pw1Helper').text("기존비밀번호를 입력하시오");
+				$('#memberPw1').focus();
+			} else if ($('#memberPw2').val().length === 0) {
+				helperInit();
+				$('#pw2Helper').text("변경할비밀번호를 입력하시오");
+				$('#memberPw2').focus();
+			} else if ($('#memberPw2').val() != $('#memberPw3').val()) {
+				helperInit();
+				$('#pw3Helper').text("비밀번호 불일치");
+				$('#memberPw3').focus();
+			} else {
+				$('#myform').submit();
+			}
+
+		});
+
+	});
+</script>
+<style>
+	#aside {
+	width: 200px;
+	height: 3000px;
+	position: fixed;
+	background: blue;
+	overflow: hidden;
+	float: left;
+}
+</style>
+</head>
+<body>
+	<div class="row">
+		<div class="col">
+			<div id="aside" th:include="/include/menu::sidemenu"></div>
+		</div>
+		<div class="col">
+			<h1 align="left">가게부 생성</h1>
+			<div style="padding: 20px;">
+				
+						<h3 align="center" style="padding: 20px;">가게부생성하기</h3>
+						
+						<form id="myform" method="post" action="/addCash" >
+							<table >
+								<tr>
+									<td>가게부이름</td>
+									<td><input type="text" placeholder="가게부이름"></td>
+								</tr>
+								
+								<tr>
+									<td>메모</td>
+									<td><input type="text" placeholder="메모 입력(선택)"></td>
+								</tr>
+							</table>
+							<div align="center">
+								<button id="btn" class="btn btn-primary">입력</button>
+							</div>
+						</form>
+					</div>
+				</div>
+		<div class="col"></div>
+	</div>
+</body>
+</html>

@@ -23,15 +23,18 @@
 </style>
 </head>
 <body>
-<div id="aside" th:include="/include/menu::sidemenu"></div> 
+ 
 <div class="row">
-	<div class="col-sm-3"></div>
+	<div class="col-sm-3">
+		<div id="aside" th:include="/include/menu::sidemenu"></div>
+	</div>
 	<div class="col-sm-6" >
 		<h1 align="center">memberInfo</h1>
 	
 	<div  align="right">
-		<a th:href="@{/removeMember}">회원탈퇴</a>
+		<a th:href="@{/modifyPw}">비밀번호변경</a>
 		<a th:href="@{/modifyMember}">회원수정</a>
+		<a th:href="@{/removeMember}">회원탈퇴</a>
 	</div>
 	<table class="table">
 		<tr>

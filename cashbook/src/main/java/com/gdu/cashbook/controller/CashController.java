@@ -27,6 +27,30 @@ import com.gdu.cashbook.vo.LoginMember;
 public class CashController {
 	@Autowired
 	private CashService cashService;
+	@GetMapping("/removeCashBook")
+	public String removeCashBook(HttpSession session) {
+		return "removeCashBook";
+	}
+	@GetMapping("/modifyCashBook")
+	public String modifyCashBook(HttpSession session) {
+		return "modifyCashBook";
+	}
+	@GetMapping("/removeCash")
+	public String removeCash(HttpSession session) {
+		return "removeCash";
+	}
+	@GetMapping("/modifyCash")
+	public String modifyCash(HttpSession session) {
+		return "modifyCash";
+	}
+	@GetMapping("/addCash")
+	public String addCash(HttpSession session) {
+		return "addCash";
+	}
+	@GetMapping("/addCashBook")
+	public String addCashBook(HttpSession session) {
+		return "addCashBook";
+	}
 	@GetMapping("/getCashListByMonth")
 	public String getCashListByMonth(HttpSession session,
 			Model model,
