@@ -4,14 +4,14 @@ public class Comment {
 	private int commentNo;
 	private int boardNo;
 	private String memberId;
-	private String memberName;
+	private String memberName;	
+	private String commentContent;
+	private String lastUpdate;
 	@Override
 	public String toString() {
 		return "Comment [commentNo=" + commentNo + ", boardNo=" + boardNo + ", memberId=" + memberId + ", memberName="
 				+ memberName + ", commentContent=" + commentContent + ", lastUpdate=" + lastUpdate + "]";
 	}
-	private String commentContent;
-	private String lastUpdate;
 	public int getCommentNo() {
 		return commentNo;
 	}

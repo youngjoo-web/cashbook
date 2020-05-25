@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.gdu.cashbook.mapper.CashMapper;
+import com.gdu.cashbook.vo.BookAndPrice;
 import com.gdu.cashbook.vo.Cash;
 import com.gdu.cashbook.vo.DayAndPrice;
 @Service
@@ -17,7 +18,15 @@ import com.gdu.cashbook.vo.DayAndPrice;
 public class CashService {
 	
 	@Autowired private CashMapper cashMapper;
-	
+	public int addCash(Cash cash) {
+		return cashMapper.insertCash(cash);
+	}
+	public int removeCash(Cash cash) {
+		return cashMapper.deleteCash(cash);
+	}
+	public int modifyCash(Cash cash) {
+		return cashMapper.updateCash(cash);
+	}
 	public List<DayAndPrice> getDayAndPriceList(String memberId, int year, int month) {
 		Map<String, Object> map = new HashMap<>();
 		map.put("memberId", memberId);
@@ -25,11 +34,20 @@ public class CashService {
 		map.put("month", month);
 		return cashMapper.selectDayAndPriceList(map);
 	}
+	
 	public List<Cash> getCashListByDate(Cash cash){
 		List<Cash>list = new ArrayList<>();
 		list = cashMapper.selectCashListByDate(cash);
 		return list;
 	}
+	public int getYearAndPriceSum(String memberId, String Year) {
+		Map<String, Object> map = new HashMap<>();
+		map.put("year", Year);
+		map.put("memberId", memberId);
+		return cashMapper.selectYearAndPriceSum(map);
+		
+	}
+	
 	public int getCashKindSum(Cash cash) {
 		int sum=0;
 		try {

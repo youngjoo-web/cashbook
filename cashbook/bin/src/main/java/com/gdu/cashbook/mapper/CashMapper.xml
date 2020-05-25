@@ -8,12 +8,15 @@
 		SUM(CASE WHEN cash_kind='수입' THEN cash_price
 		WHEN cash_kind='지출' THEN -cash_price END) as price
 		FROM cash
-		WHERE member_id
-		= #{memberId}
+		WHERE member_id = #{memberId}
+		AND book_id = #{bookId}
 		AND YEAR(cash_date) = #{year}
 		AND MONTH(cash_date) = #{month}
 		GROUP BY
 		DAY(cash_date)
+	</select>
+	<select id="selectBookAndPriceList" parameterType="java.util.Map" resultType="com.gdu.cashbook.vo.BookAndPrice">
+	
 	</select>
 	<select id="selectCashListByDate" parameterType="com.gdu.cashbook.vo.Cash" resultType="com.gdu.cashbook.vo.Cash">
 		SELECT
@@ -26,13 +29,15 @@
 		cash_memo as cashMemo
 		FROM cash
 		WHERE member_id = #{memberId}
-		AND cash_date =
-		#{cashDate}
+		AND book_id = #{bookId}
+		AND cash_date = #{cashDate}
 	</select>
 	<select id="selectCashKindSum" parameterType="com.gdu.cashbook.vo.Cash" resultType="int">
 		SELECT SUM(CASE
 		WHEN cash_kind='수입' THEN cash_price WHEN cash_kind='지출' THEN
 		-cash_price END) as price FROM cash
-		WHERE member_id = #{memberId} AND cash_date=#{cashDate}
+		WHERE member_id = #{memberId} 
+		AND book_id = #{bookId}
+		AND cash_date=#{cashDate}
 	</select>
 </mapper>

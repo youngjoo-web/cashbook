@@ -3,6 +3,40 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.gdu.cashbook.mapper.CashMapper">
+	<insert id="insertCash" parameterType="com.gdu.cashbook.vo.Cash">
+		INSERT INTO cash(
+			book_id,
+			member_id,
+			cash_date,
+			cash_kind,
+			category_name,
+			cash_price,
+			cash_place,
+			cash_memo
+		) VALUES (
+			#{bookId},
+			#{memberId},
+			#{cashDate},
+			#{cashKind},
+			#{categoryName},
+			#{cashPrice},
+			#{cashPlace},
+			#{cashMemo}
+		)
+	</insert>
+	<delete id="deleteCash" parameterType="com.gdu.cashbook.vo.Cash">
+		DELETE FROM cash
+		WHERE cash_no = #{cashNo}
+	</delete>
+	<update id="updateCash" parameterType="com.gdu.cashbook.vo.Cash">
+		UPDATE member 
+		SET cash_kind = #{cashKind},
+			category_name = #{categoryName},
+			cash_price = #{cashPrice},
+			cash_place = #{cashPlace},
+			cash_memo = #{cashMemo}
+		WHERE cash_no = #{cashNo}
+	</update>
 	<select id="selectDayAndPriceList" parameterType="java.util.Map" resultType="com.gdu.cashbook.vo.DayAndPrice">
 		SELECT DAY(cash_date) as day,
 		SUM(CASE WHEN cash_kind='수입' THEN cash_price
@@ -15,8 +49,22 @@
 		GROUP BY
 		DAY(cash_date)
 	</select>
+	<select id="selectYearAndPriceSum" parameterType="java.util.Map" resultType="int">
+		SELECT SUM(CASE
+		WHEN cash_kind='수입' THEN cash_price WHEN cash_kind='지출' THEN
+		-cash_price END) as price FROM cash
+		WHERE member_id = #{memberId} 
+		AND YEAR(cash_date)=#{year}
+	</select>
 	<select id="selectBookAndPriceList" parameterType="java.util.Map" resultType="com.gdu.cashbook.vo.BookAndPrice">
-	
+		SELECT book_id as bookId,
+		SUM(CASE WHEN cash_kind='수입' THEN cash_price
+		WHEN cash_kind='지출' THEN -cash_price END) as price
+		FROM cash
+		WHERE member_id = #{memberId}
+		AND YEAR(cash_date) = #{year}
+		GROUP BY
+		book_id
 	</select>
 	<select id="selectCashListByDate" parameterType="com.gdu.cashbook.vo.Cash" resultType="com.gdu.cashbook.vo.Cash">
 		SELECT
