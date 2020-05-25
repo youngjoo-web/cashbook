@@ -2,6 +2,7 @@ package com.gdu.cashbook.vo;
 
 public class Cash {
 	private int cashNo;
+	private int bookId;
 	private String memberId;
 	private String cashDate;
 	private String cashKind;
@@ -9,12 +10,17 @@ public class Cash {
 	private int cashPrice;
 	private String cashPlace;
 	private String cashMemo;
-	
 	public int getCashNo() {
 		return cashNo;
 	}
 	public void setCashNo(int cashNo) {
 		this.cashNo = cashNo;
+	}
+	public int getBookId() {
+		return bookId;
+	}
+	public void setBookId(int bookId) {
+		this.bookId = bookId;
 	}
 	public String getMemberId() {
 		return memberId;
@@ -60,10 +66,9 @@ public class Cash {
 	}
 	@Override
 	public String toString() {
-		return "Cash [cashNo=" + cashNo + ", memberId=" + memberId + ", cashDate=" + cashDate + ", cashKind=" + cashKind
-				+ ", categoryName=" + categoryName + ", cashPrice=" + cashPrice + ", cashPlace=" + cashPlace
-				+ ", cashMemo=" + cashMemo + "]";
+		return "Cash [cashNo=" + cashNo + ", bookId=" + bookId + ", memberId=" + memberId + ", cashDate=" + cashDate
+				+ ", cashKind=" + cashKind + ", categoryName=" + categoryName + ", cashPrice=" + cashPrice
+				+ ", cashPlace=" + cashPlace + ", cashMemo=" + cashMemo + "]";
 	}
-	
 	
 }

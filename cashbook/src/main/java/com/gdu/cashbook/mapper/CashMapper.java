@@ -12,9 +12,10 @@ import com.gdu.cashbook.vo.DayAndPrice;
 
 @Mapper
 public interface CashMapper {
+	
 	public List<DayAndPrice> selectDayAndPriceList(Map<String, Object> map);
 
-	
 	public ArrayList<Cash> selectCashListByDate(Cash cash);
+	
 	public int selectCashKindSum(Cash cash);
 }
