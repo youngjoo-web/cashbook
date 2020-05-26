@@ -54,7 +54,8 @@ public class CashController {
 	@GetMapping("/getCashListByMonth")
 	public String getCashListByMonth(HttpSession session,
 			Model model,
-			@RequestParam(value="day", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate day) {
+			@RequestParam(value="day", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate day,
+			@RequestParam("bookId") int bookId) {
 		/*
 		if(session.getAttribute("loginMember") == null) {
 			return "redirect:/";
@@ -70,7 +71,7 @@ public class CashController {
 		String memberId = ((LoginMember)session.getAttribute("loginMember")).getMemberId();
 		int year = cDay.get(Calendar.YEAR);
 		int month = cDay.get(Calendar.MONTH)+1;
-		List<DayAndPrice> dayAndPriceList = cashService.getDayAndPriceList(memberId, year, month);
+		List<DayAndPrice> dayAndPriceList = cashService.getDayAndPriceList(memberId, year, month, bookId);
 		System.out.println(dayAndPriceList+"<--dayAndPriceList");
 
 		model.addAttribute("dayAndPriceList", dayAndPriceList);
@@ -87,7 +88,8 @@ public class CashController {
 	}
 	
 	@GetMapping("/getCashListByDate")
-	public String getCashListMyDate(HttpSession session, Model model, @RequestParam(value="day", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate day) {
+	public String getCashListMyDate(HttpSession session, Model model, @RequestParam(value="day", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate day,
+			@RequestParam("bookId") int bookId) {
 		if(day == null) {
 			day = LocalDate.now();
 		}
@@ -99,6 +101,7 @@ public class CashController {
 		Cash cash = new Cash();
 		cash.setCashDate(day.toString());
 		cash.setMemberId(loginMemberId);
+		cash.setBookId(bookId);
 		
 		List<Cash> cashList = cashService.getCashListByDate(cash);
 		int sum = cashService.getCashKindSum(cash);

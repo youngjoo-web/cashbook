@@ -1,1 +1,66 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gdu.cashbook.mapper.CommentMapper">
+<!-- 
+insertComment
+parameterType = Comment
+
+selectCommentList
+parameterType = boardNo, beginRow, rowPerPage
+resultType = Comment
+
+deleteComment
+parameterType = Comment
+
+updateComment
+parameterType = Comment
+
+
+ -->
+ 	<select id="selectCommentCount" parameterType="com.gdu.cashbook.vo.Board" resultType="int">
+ 		SELECT
+ 			COUNT(*)
+ 		FROM comment
+ 		WHERE board_no = #{boardNo}
+	</select>
+	<insert id="insertComment" parameterType="com.gdu.cashbook.vo.Comment">
+		INSERT INTO comment(
+			board_no,
+			member_id,
+			member_name,
+			comment_content,
+			last_update
+		) VALUES (
+			#{boardId},
+			#{memberId},
+			#{memberName},
+			#{commentContent},
+			now()
+		)		
+	</insert>
+	<select id="selectComment" parameterType="java.util.Map" resultType="com.gdu.cashBook.vo.Comment">
+		SELECT
+			comment_no as commentNo,
+			board_no as boardNo,
+			member_id as memberId,
+			member_name as memberName,
+			comment_content as commentContent,
+			last_update as lastUpdate
+		FROM comment
+		WHERE board_no = #{boardNo}
+		ORDER BY last_update DESC
+		LIMIT #{beginRow}, #{rowPerPage}
+	</select>
+	<delete id="deleteComment" parameterType="com.gdu.cashbook.vo.Comment">
+		DELETE FROM comment
+		WHERE comment_no = #{commentNo}		
+	</delete>
+	<update id="updateComment" parameterType="com.gdu.cashbook.vo.Comment">
+		UPDATE comment
+		SET comment_content = #{commentContent},
+			last_update = now()
+		WHERE comment_no = #{commentNo}		
+	</update>
+</mapper>

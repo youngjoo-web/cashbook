@@ -3,6 +3,21 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.gdu.cashbook.mapper.MemberMapper">
+	<!-- 회원목록 출력
+	selectMemberList
+	- 받아오는값 : 페이징(시작데이터, 한페이지에 출력할 데이터수)
+	- 실행 : 멤버 테이블에 있는 데이터를 시작데이터 부터 한페이지에 출력할 데이터 수만큼 출력 -->
+	<select id="selectMemberList" parameterType="java.util.Map" resultType="com.gdu.cashbook.vo.Member">
+		SELECT
+			member_id as memberId,
+			member_name as memberName,
+			member_addr as memberAddr,
+			member_phone as memberPhone,
+			member_email as memberEmail,
+			member_pic as memberPic
+		FROM member
+		LIMIT #{beginRow}, #{rowPerPage}
+	</select>
 	<!-- 비밀번호변경
 	updateMemberPw
 	- 받아오는값 : 기존비밀번호(memberPw1), 바뀔 비밀번호(memberPw2), 비밀번호바꿀회원 아이디(memberId)

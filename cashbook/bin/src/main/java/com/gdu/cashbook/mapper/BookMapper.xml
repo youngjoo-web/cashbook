@@ -3,6 +3,24 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.gdu.cashbook.mapper.BookMapper">
+	<!-- 
+	insertBook
+	parameterType = Book
+	
+	selectBookListByYear
+	parameterType = String
+	resultType = Book
+	
+	updateBook
+	parameterType = Book
+	
+	deleteBook
+	parameterType = Book
+	
+	deleteCashByBook
+	parameterType = Book
+	
+	 -->
 	<insert id="insertBook" parameterType="com.gdu.cashbook.vo.Book">
 		INSERT INTO book(
 			INSERT INTO member(
@@ -23,7 +41,7 @@
 			#{bookYear}
 		)
 	</insert>
-	<select id="selectBookListByYear" parameterType="com.gdu.cashbook.vo.Book" resultType="com.gdu.cashbook.vo.Book">
+	<select id="selectBookListByYear" parameterType="String" resultType="com.gdu.cashbook.vo.Book">
 		SELECT 
 			book_id,
 			book_name,

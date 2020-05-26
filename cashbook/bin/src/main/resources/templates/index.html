@@ -31,6 +31,7 @@
 				<br> <br>
 				<div th:if="${session.loginMember != null}">
 					<!-- 로그인이 되어있을시 -->
+					<a href="/home" class="btn btn-primary btn-block">홈</a>
 					<a href="/logout" class="btn btn-primary btn-block">로그아웃</a>
 				</div>
 				<div th:if="${session.loginMember == null}">

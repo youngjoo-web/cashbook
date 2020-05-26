@@ -3,6 +3,14 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.gdu.cashbook.mapper.CashMapper">
+	<select id="selectBookId" parameterType="com.gdu.cashbook.vo.Cash">
+		SELECT 
+			book_id as bookId
+		FROM book
+		WHERE
+			book_name = #{bookName}
+		AND book_year = #{year}
+	</select>
 	<insert id="insertCash" parameterType="com.gdu.cashbook.vo.Cash">
 		INSERT INTO cash(
 			book_id,
@@ -57,14 +65,18 @@
 		AND YEAR(cash_date)=#{year}
 	</select>
 	<select id="selectBookAndPriceList" parameterType="java.util.Map" resultType="com.gdu.cashbook.vo.BookAndPrice">
-		SELECT book_id as bookId,
+		SELECT 
+		book_name AS bookName,
+		book_year AS bookYear,
 		SUM(CASE WHEN cash_kind='수입' THEN cash_price
 		WHEN cash_kind='지출' THEN -cash_price END) as price
-		FROM cash
-		WHERE member_id = #{memberId}
-		AND YEAR(cash_date) = #{year}
+		FROM cash ca 
+		INNER JOIN book bo
+		ON ca.book_id = bo.book_id
+		WHERE ca.member_id = #{memberId}
+		AND YEAR(ca.cash_date) = #{year}
 		GROUP BY
-		book_id
+		ca.book_id
 	</select>
 	<select id="selectCashListByDate" parameterType="com.gdu.cashbook.vo.Cash" resultType="com.gdu.cashbook.vo.Cash">
 		SELECT

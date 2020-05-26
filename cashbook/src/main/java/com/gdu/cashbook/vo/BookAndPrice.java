@@ -1,14 +1,14 @@
 package com.gdu.cashbook.vo;
 
 public class BookAndPrice {
-	private int bookId;
+	private String bookYear;
 	private String bookName;
 	private int price;
-	public int getBookId() {
-		return bookId;
+	public String getBookYear() {
+		return bookYear;
 	}
-	public void setBookId(int bookId) {
-		this.bookId = bookId;
+	public void setBookYear(String bookYear) {
+		this.bookYear = bookYear;
 	}
 	public String getBookName() {
 		return bookName;
@@ -24,6 +24,7 @@ public class BookAndPrice {
 	}
 	@Override
 	public String toString() {
-		return "BookAndPrice [bookId=" + bookId + ", bookName=" + bookName + ", price=" + price + "]";
+		return "BookAndPrice [bookYear=" + bookYear + ", bookName=" + bookName + ", price=" + price + "]";
 	}
+	
 }
