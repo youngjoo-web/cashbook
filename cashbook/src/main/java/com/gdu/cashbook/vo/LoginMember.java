@@ -3,10 +3,7 @@ package com.gdu.cashbook.vo;
 public class LoginMember {
 	private String memberId;
 	private String memberPw;
-	@Override
-	public String toString() {
-		return "LoginMember [memberId=" + memberId + ", memberPw=" + memberPw + "]";
-	}
+	private int memberLevel;
 	public String getMemberId() {
 		return memberId;
 	}
@@ -18,5 +15,15 @@ public class LoginMember {
 	}
 	public void setMemberPw(String memberPw) {
 		this.memberPw = memberPw;
+	}
+	public int getMemberLevel() {
+		return memberLevel;
+	}
+	public void setMemberLevel(int memberLevel) {
+		this.memberLevel = memberLevel;
+	}
+	@Override
+	public String toString() {
+		return "LoginMember [memberId=" + memberId + ", memberPw=" + memberPw + ", memberLevel=" + memberLevel + "]";
 	}
 }

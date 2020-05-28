@@ -12,6 +12,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.gdu.cashbook.service.BoardService;
+import com.gdu.cashbook.service.CashService;
+import com.gdu.cashbook.service.CommentService;
 import com.gdu.cashbook.service.MemberService;
 import com.gdu.cashbook.vo.LoginMember;
 import com.gdu.cashbook.vo.Member;
@@ -23,6 +26,12 @@ public class MemberController {
 	
 	@Autowired
 	private MemberService memberService;
+	@Autowired
+	private CashService cashService;
+	@Autowired
+	private CommentService commentService;
+	@Autowired
+	private BoardService boardService;
 	@GetMapping("/modifyPw")
 	public String modifyPw(HttpSession session) {
 		if(session.getAttribute("loginMember") == null) {
@@ -122,16 +131,31 @@ public class MemberController {
 		model.addAttribute("member", member);
 		return "modifyMember";
 	}
+	
+	
+	
+	
+	
+	
+	
+	//************************************************************************************************************
 	@PostMapping("/removeMember")
 	public String removeMember(LoginMember loginMember, HttpSession session) {
 		if(session.getAttribute("loginMember") ==null) {
 			return "redirect:/";
 		}
 		System.out.println("remove : "+loginMember);
+		
 		memberService.removeMember(loginMember);
 		session.invalidate();
 		return "index";
 	}
+	//************************************************************************************************************
+	
+	
+	
+	
+	
 	@GetMapping("/removeMember")
 	public String removeMember(HttpSession session) {
 		if(session.getAttribute("loginMember") ==null) {

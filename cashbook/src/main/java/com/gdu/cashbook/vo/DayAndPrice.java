@@ -1,12 +1,12 @@
 package com.gdu.cashbook.vo;
 
 public class DayAndPrice {
-	private String day;
+	private int day;
 	private int price;
-	public String getDay() {
+	public int getDay() {
 		return day;
 	}
-	public void setDay(String day) {
+	public void setDay(int day) {
 		this.day = day;
 	}
 	public int getPrice() {

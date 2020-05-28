@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+<!-- jQuery library -->
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<!-- Popper JS -->
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<!-- Latest compiled JavaScript -->
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+<style>
+#aside {
+	width: 200px;
+	height: 3000px;
+	position: fixed;
+	background: blue;
+	overflow: hidden;
+	float: left;
+}
+</style>
+</head>
+<body>
+	
+
+	<div class="row">
+		<div class="col-sm-2">
+		<div id="aside" th:include="/include/menu::sidemenu"></div>
+		</div>
+		<div class="col-sm-10">
+			<div class="row">
+				<div class="col-sm-2"></div>
+				<div class="col-sm-8">
+					<h1 align="center">게시판</h1>
+				</div>
+				<div class="col-sm-2">
+					<a th:if="${session.loginMember.memberLevel == 0}" th:href="@{/addBoard}" th:text="게시글추가"></a>
+				</div>
+			</div>
+			
+			<table class = "table">
+				<tr>
+					<td>게시글번호</td><td>게시자</td><td>제목</td><td>업데이트날짜</td>
+				</tr>
+				<tr th:each="boardList : ${boardList}">
+					<td><a th:href="@{/getBoardOne(boardNo=${boardList.boardNo})}" th:text="${boardList.boardNo}"></a></td>
+					<td><a th:href="@{/getBoardOne(boardNo=${boardList.boardNo})}" th:text="${boardList.memberName}"></a></td>
+					<td><a th:href="@{/getBoardOne(boardNo=${boardList.boardNo})}" th:text="${boardList.boardTitle}"></a></td>
+					<td><a th:href="@{/getBoardOne(boardNo=${boardList.boardNo})}" th:text="${boardList.lastUpdate}"></a></td>
+				</tr>
+			</table>
+			<div align="center">
+				<a th:href="@{/getBoardList(currentPage=1)}">첫페이지</a> 
+				<a th:if="${currentPage > 1}" th:href="@{/getBoardList(currentPage=${currentPage-1})}">이전</a> 
+				<a th:if="${currentPage < lastPage}" th:href="@{/getBoardList(currentPage=${currentPage+1})}">다음</a>
+				<a th:href="@{/getBoardList(currentPage=${lastPage})}">마지막페이지</a>
+			</div>
+			
+
+		</div>
+		
+	</div>
+
+	
+
+</body>
+</html>

@@ -1,8 +1,8 @@
 package com.gdu.cashbook.vo;
 
-public class Comment {
+public class CommentForm {
 	private int commentNo;
-	private int boardNo;
+	private String boardNo;
 	private String memberId;
 	private String memberName;
 	private String commentContent;
@@ -13,10 +13,10 @@ public class Comment {
 	public void setCommentNo(int commentNo) {
 		this.commentNo = commentNo;
 	}
-	public int getBoardNo() {
+	public String getBoardNo() {
 		return boardNo;
 	}
-	public void setBoardNo(int boardNo) {
+	public void setBoardNo(String boardNo) {
 		this.boardNo = boardNo;
 	}
 	public String getMemberId() {
@@ -45,8 +45,8 @@ public class Comment {
 	}
 	@Override
 	public String toString() {
-		return "Comment [commentNo=" + commentNo + ", boardNo=" + boardNo + ", memberId=" + memberId + ", memberName="
-				+ memberName + ", commentContent=" + commentContent + ", lastUpdate=" + lastUpdate + "]";
+		return "CommentForm [commentNo=" + commentNo + ", boardNo=" + boardNo + ", memberId=" + memberId
+				+ ", memberName=" + memberName + ", commentContent=" + commentContent + ", lastUpdate=" + lastUpdate
+				+ "]";
 	}
-	
 }

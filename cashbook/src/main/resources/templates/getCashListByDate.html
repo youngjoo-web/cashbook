@@ -36,9 +36,12 @@
 		<div class="col-sm-10">
 			<h1 align="center">가게부리스트</h1>
 			<h2 th:text="${day}" align="center"></h2>
+			<div align="right">
+				<a th:href="@{/addCash}">추가</a>
+			</div>
 			<div align="center">
-				<a th:href="@{/getCashListByDate(day=${day.plusDays(-1)})}">이전</a> <a
-					th:href="@{/getCashListByDate(day=${day.plusDays(1)})}">다음</a>
+				<a th:href="@{/getCashListByDate(day=${day.plusDays(-1)})}">이전</a> 
+				<a th:href="@{/getCashListByDate(day=${day.plusDays(1)})}">다음</a>
 				<table class="table">
 					<thead>
 						<tr>
@@ -49,6 +52,8 @@
 							<td>price</td>
 							<td>place</td>
 							<td>memo</td>
+							<td>수정</td>
+							<td>삭제</td>
 						</tr>
 					</thead>
 					<tbody>
@@ -60,6 +65,9 @@
 							<td th:text="${cashList.cashPrice}"></td>
 							<td th:text="${cashList.cashPlace}"></td>
 							<td th:text="${cashList.cashMemo}"></td>
+							<td><a th:href="@{/modifyCash(cashNo=${cashList.cashNo})}">수정</a></td>
+							<td><a th:href="@{/removeCash(cashNo=${cashList.cashNo})}">삭제</a></td>
+							<td></td>
 						</tr>
 					</tbody>
 				</table>

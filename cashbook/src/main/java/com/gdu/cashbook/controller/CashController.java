@@ -13,6 +13,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 
@@ -27,40 +28,62 @@ import com.gdu.cashbook.vo.LoginMember;
 public class CashController {
 	@Autowired
 	private CashService cashService;
-	@GetMapping("/removeCashBook")
-	public String removeCashBook(HttpSession session) {
-		return "removeCashBook";
-	}
-	@GetMapping("/modifyCashBook")
-	public String modifyCashBook(HttpSession session) {
-		return "modifyCashBook";
-	}
-	@GetMapping("/removeCash")
-	public String removeCash(HttpSession session) {
-		return "removeCash";
-	}
-	@GetMapping("/modifyCash")
-	public String modifyCash(HttpSession session) {
-		return "modifyCash";
-	}
 	@GetMapping("/addCash")
 	public String addCash(HttpSession session) {
+		if(session.getAttribute("loginMember") == null) {
+			return "redirect:/";
+		}
 		return "addCash";
 	}
-	@GetMapping("/addCashBook")
-	public String addCashBook(HttpSession session) {
-		return "addCashBook";
+	@PostMapping("/addCash")
+	public String addCash(HttpSession session, Cash cash) {
+		if(session.getAttribute("loginMember") == null) {
+			return "redirect:/";
+		}
+		System.out.println(cash);
+		String loginMemberId = ((LoginMember)session.getAttribute("loginMember")).getMemberId();
+		cash.setMemberId(loginMemberId);
+		cashService.addCash(cash);
+		return "redirect:/getCashListByDate";
+	}
+	@GetMapping("/removeCash")
+	public String modifyCash(HttpSession session,@RequestParam("cashNo") String cashNo) {
+		if(session.getAttribute("loginMember") == null) {
+			return "redirect:/";
+		}
+		System.out.println(cashNo);
+		cashService.removeCash(cashNo);
+		return "redirect:/getCashListByDate";
+	}
+	@GetMapping("/modifyCash")
+	public String modifyCash(HttpSession session,@RequestParam("cashNo") String cashNo, Model model ) {
+		if(session.getAttribute("loginMember") == null) {
+			return "redirect:/";
+		}
+		System.out.println(cashNo);
+		Cash cash = cashService.getCashOne(cashNo);
+		System.out.println(cash);
+		model.addAttribute("cash", cash);
+		return "modifyCash";
+	}
+	@PostMapping("/modifyCash")
+	public String modifyCash(HttpSession session,Cash cash) {
+		if(session.getAttribute("loginMember") == null) {
+			return "redirect:/";
+		}
+		System.out.println("modifyPost : "+cash);
+		cashService.modifyCash(cash);
+		return "redirect:/getCashListByDate";
 	}
 	@GetMapping("/getCashListByMonth")
 	public String getCashListByMonth(HttpSession session,
 			Model model,
-			@RequestParam(value="day", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate day,
-			@RequestParam("bookId") int bookId) {
-		/*
+			@RequestParam(value="day", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate day) {
+		
 		if(session.getAttribute("loginMember") == null) {
 			return "redirect:/";
 		}
-		*/
+		
 		System.out.println("day:"+day);
 		Calendar cDay = Calendar.getInstance(); // 오늘
 		if(day == null) {
@@ -71,7 +94,7 @@ public class CashController {
 		String memberId = ((LoginMember)session.getAttribute("loginMember")).getMemberId();
 		int year = cDay.get(Calendar.YEAR);
 		int month = cDay.get(Calendar.MONTH)+1;
-		List<DayAndPrice> dayAndPriceList = cashService.getDayAndPriceList(memberId, year, month, bookId);
+		List<DayAndPrice> dayAndPriceList = cashService.getDayAndPriceList(memberId, year, month);
 		System.out.println(dayAndPriceList+"<--dayAndPriceList");
 
 		model.addAttribute("dayAndPriceList", dayAndPriceList);
@@ -88,8 +111,7 @@ public class CashController {
 	}
 	
 	@GetMapping("/getCashListByDate")
-	public String getCashListMyDate(HttpSession session, Model model, @RequestParam(value="day", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate day,
-			@RequestParam("bookId") int bookId) {
+	public String getCashListMyDate(HttpSession session, Model model, @RequestParam(value="day", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate day) {
 		if(day == null) {
 			day = LocalDate.now();
 		}
@@ -101,7 +123,6 @@ public class CashController {
 		Cash cash = new Cash();
 		cash.setCashDate(day.toString());
 		cash.setMemberId(loginMemberId);
-		cash.setBookId(bookId);
 		
 		List<Cash> cashList = cashService.getCashListByDate(cash);
 		int sum = cashService.getCashKindSum(cash);

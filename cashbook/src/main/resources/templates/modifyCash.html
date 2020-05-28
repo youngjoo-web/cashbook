@@ -1,10 +1,79 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-<meta charset="EUC-KR">
+<meta charset="UTF-8">
 <title>Insert title here</title>
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+
+<!-- jQuery library -->
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<!-- Popper JS -->
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+
+<!-- Latest compiled JavaScript -->
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+<script>
+	$(document).ready(function(){
+		$('#btn').click(function(){
+			$('#modifyMember').submit();
+		});
+	});
+</script>
+<style>
+	#aside {
+	width: 200px;
+	height: 3000px;
+	position: fixed;
+	background: blue;
+	overflow: hidden;
+	float: left;
+}
+</style>
 </head>
 <body>
-
+	<div id="aside" th:include="/include/menu::sidemenu"></div>
+	<div class="row"> 
+	<div class="col-sm-3"></div>
+	<div class="col-sm-6" align="center">
+		<h1 align="center">가계부수정</h1>
+	<form method="post" action="/modifyCash">
+		<div>
+			cashId<br><input type="text" name="cashNo" th:value="${cash.cashNo}">
+		</div>
+		<div>
+			금액<br><input type="text" name="cashPrice" th:value="${cash.cashPrice}">
+		</div>
+		<div>
+			장소<br><input type="text" name="cashPlace" th:value="${cash.cashPlace}">
+		</div>
+		<div>
+			종류<br>
+			<select name="cashKind">
+				<option th:value="수입" th:text="수입">
+				<option th:value="지출" th:text="지출">
+			</select>
+		</div>
+		<div>
+			카테고리<br><input type="text" name="categoryName"  th:value="${cash.categoryName}">
+		</div>
+		<div>
+			메모<br><input type="text" name="cashMemo"  th:value="${cash.cashMemo}">
+		</div>
+		<br>
+		<div>
+			<button type="submit"  >수정</button>
+		</div>
+	</form>
+	
+	</div>
+	<div class="col-sm-3"></div>
+	
+	</div>
 </body>
 </html>

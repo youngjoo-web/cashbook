@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+<!-- jQuery library -->
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<!-- Popper JS -->
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<!-- Latest compiled JavaScript -->
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+<style>
+#aside {
+	width: 200px;
+	height: 3000px;
+	position: fixed;
+	background: blue;
+	overflow: hidden;
+	float: left;
+}
+</style>
+</head>
+<body>
+
+
+	<div class="row">
+		<div class="col-sm-2">
+			<div id="aside" th:include="/include/menu::sidemenu"></div>
+		</div>
+		<div class="col-sm-10">
+			<div class="row">
+				<div class="col-sm-2"></div>
+				<div class="col-sm-8">
+					<h1 align="center">게시판</h1>
+				</div>
+				<div class="col-sm-2"></div>
+			</div>
+
+			<table class="table">
+				<tr>
+					<td>게시글번호</td>
+					<td th:text="${board.boardNo}"></td>
+				</tr>
+				<tr>
+					<td>작성자</td>
+					<td th:text="${board.memberName}"></td>
+				</tr>
+				<tr>
+					<td>제목</td>
+					<td th:text="${board.boardTitle}"></td>
+				</tr>
+				<tr>
+					<td>내용</td>
+					<td th:text="${board.boardContent}"></td>
+				</tr>
+				<tr>
+					<td>업데이트날짜</td>
+					<td th:text="${board.lastUpdate}"></td>
+				</tr>
+
+			</table>
+			<br> <br>
+			<div align="left">
+
+				<form method="post" action="/modifyComment">
+					<input type="hidden" name="boardNo"
+						th:value="${comment.boardNo}"> <input type="hidden"
+						name="commentNo" th:value="${comment.commentNo}">
+
+					<div align="left">
+						내용<br> <input type="text" name="commentContent"
+							class="form-control" th:value="${comment.commentContent}">
+					</div>
+					<br>
+					<div align="center">
+						<button type="submit" class="btn btn-block btn-primary">수정완료</button>
+					</div>
+
+
+				</form>
+
+			</div>
+			<br> <br>
+			<table class="table">
+				<tr th:each="commentList : ${commentList}">
+					<td th:text="${commentList.commentNo}"></td>
+					<td th:text="${commentList.memberName}"></td>
+					<td th:text="${commentList.commentContent}"></td>
+					<td th:text="${commentList.lastUpdate}"></td>
+					<td th:text="수정"></td>
+					<td th:text="삭제"></td>
+				</tr>
+			</table>
+			
+
+
+
+		</div>
+
+	</div>
+
+
+
+</body>
+</html>

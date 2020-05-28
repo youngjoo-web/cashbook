@@ -3,17 +3,26 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.gdu.cashbook.mapper.CashMapper">
-	<select id="selectBookId" parameterType="com.gdu.cashbook.vo.Cash">
-		SELECT 
-			book_id as bookId
-		FROM book
-		WHERE
-			book_name = #{bookName}
-		AND book_year = #{year}
-	</select>
+	<delete id="deleteCash" parameterType="int">
+		DELETE FROM cash
+		WHERE cash_no = #{cashNo}
+		
+	</delete>
+	<delete id="deleteCashByMember" parameterType="com.gdu.cashbook.vo.LoginMember">
+		DELETE FROM cash
+		WHERE member_id = #{memberId}
+	</delete>
+	<update id="updateCash" parameterType="com.gdu.cashbook.vo.Cash">
+		UPDATE cash 
+		SET cash_kind = #(cashKind),
+			category_name = #{categoryName},
+			cash_price = #{cashPrice},
+			cash_place = #{cashPlace},
+			cash_memo = #{cashMemo}		
+		WHERE cash_no = #{cashNo}
+	</update>
 	<insert id="insertCash" parameterType="com.gdu.cashbook.vo.Cash">
 		INSERT INTO cash(
-			book_id,
 			member_id,
 			cash_date,
 			cash_kind,
@@ -22,7 +31,6 @@
 			cash_place,
 			cash_memo
 		) VALUES (
-			#{bookId},
 			#{memberId},
 			#{cashDate},
 			#{cashKind},
@@ -32,54 +40,32 @@
 			#{cashMemo}
 		)
 	</insert>
-	<delete id="deleteCash" parameterType="com.gdu.cashbook.vo.Cash">
-		DELETE FROM cash
+	<select id="selectCashOne" parameterType="int" resultType="com.gdu.cashbook.vo.Cash">
+		SELECT
+			cash_no as cashNo,
+			cash_kind as cashKind,
+			category_name as categoryName,
+			cash_price as cashPrice,
+			cash_place as cashPlace,
+			cash_memo as cashMemo
+		FROM cash
 		WHERE cash_no = #{cashNo}
-	</delete>
-	<update id="updateCash" parameterType="com.gdu.cashbook.vo.Cash">
-		UPDATE member 
-		SET cash_kind = #{cashKind},
-			category_name = #{categoryName},
-			cash_price = #{cashPrice},
-			cash_place = #{cashPlace},
-			cash_memo = #{cashMemo}
-		WHERE cash_no = #{cashNo}
-	</update>
+	</select>
 	<select id="selectDayAndPriceList" parameterType="java.util.Map" resultType="com.gdu.cashbook.vo.DayAndPrice">
 		SELECT DAY(cash_date) as day,
 		SUM(CASE WHEN cash_kind='수입' THEN cash_price
 		WHEN cash_kind='지출' THEN -cash_price END) as price
 		FROM cash
-		WHERE member_id = #{memberId}
-		AND book_id = #{bookId}
+		WHERE member_id
+		= #{memberId}
 		AND YEAR(cash_date) = #{year}
 		AND MONTH(cash_date) = #{month}
 		GROUP BY
 		DAY(cash_date)
 	</select>
-	<select id="selectYearAndPriceSum" parameterType="java.util.Map" resultType="int">
-		SELECT SUM(CASE
-		WHEN cash_kind='수입' THEN cash_price WHEN cash_kind='지출' THEN
-		-cash_price END) as price FROM cash
-		WHERE member_id = #{memberId} 
-		AND YEAR(cash_date)=#{year}
-	</select>
-	<select id="selectBookAndPriceList" parameterType="java.util.Map" resultType="com.gdu.cashbook.vo.BookAndPrice">
-		SELECT 
-		book_name AS bookName,
-		book_year AS bookYear,
-		SUM(CASE WHEN cash_kind='수입' THEN cash_price
-		WHEN cash_kind='지출' THEN -cash_price END) as price
-		FROM cash ca 
-		INNER JOIN book bo
-		ON ca.book_id = bo.book_id
-		WHERE ca.member_id = #{memberId}
-		AND YEAR(ca.cash_date) = #{year}
-		GROUP BY
-		ca.book_id
-	</select>
 	<select id="selectCashListByDate" parameterType="com.gdu.cashbook.vo.Cash" resultType="com.gdu.cashbook.vo.Cash">
 		SELECT
+		cash_no as cashNo,
 		member_id as memberId,
 		cash_date as cashDate,
 		cash_kind as cashKind,
@@ -89,15 +75,13 @@
 		cash_memo as cashMemo
 		FROM cash
 		WHERE member_id = #{memberId}
-		AND book_id = #{bookId}
-		AND cash_date = #{cashDate}
+		AND cash_date =
+		#{cashDate}
 	</select>
 	<select id="selectCashKindSum" parameterType="com.gdu.cashbook.vo.Cash" resultType="int">
 		SELECT SUM(CASE
 		WHEN cash_kind='수입' THEN cash_price WHEN cash_kind='지출' THEN
 		-cash_price END) as price FROM cash
-		WHERE member_id = #{memberId} 
-		AND book_id = #{bookId}
-		AND cash_date=#{cashDate}
+		WHERE member_id = #{memberId} AND cash_date=#{cashDate}
 	</select>
 </mapper>

@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+
+<style>
+#aside {
+	width: 200px;
+	height: 3000px;
+	position: fixed;
+	background: blue;
+	overflow: hidden;
+	float: left;
+}
+div.gd-left {
+	float: left;
+	width: 100px;
+	height: 100px;
+	border: 1px solid #000000;
+	margin-right: 10px;
+	margin-bottom: 10px;
+	border-radius: 5px;
+}
+
+div.gd-clear {
+	clear: both;
+	margin-left: 10px;
+	border-radius: 5px;
+	color: #FF0000;
+}
+
+div.gd-title {
+	height: 40px;
+	background-color: gray;
+}
+
+.gd-blue {
+	color: blue;
+}
+
+.gd-red {
+	color: red;
+}
+</style>
+
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+<!-- jQuery library -->
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<!-- Popper JS -->
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<!-- Latest compiled JavaScript -->
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+
+</head>
+<body>
+	<div class="row">
+		<div class="col-sm-4">
+			<div id="aside" th:include="/include/menu::sidemenu"></div>
+		</div>
+		<div class="col-sm-8">
+			<h1>월별 가계부 관리</h1>
+
+			<h3 th:text="${month+'월'}"></h3>
+
+			<div>
+				<a th:href="@{/getCashListByYear(day=${day.plusYears(-1)})}">이전</a>
+				<a th:href="@{/getCashListByYear(day=${day.plusYears(1)})}">다음</a>
+			</div>
+
+			
+			<div
+				th:each="bookAndPriceList:">
+				<div
+					th:text="${i-(firstDayOfWeek-1)}>0 ? ${i-(firstDayOfWeek-1)} : ''"></div>
+				<div th:each="dp : ${dayAndPriceList}">
+					<span th:if="${i-(firstDayOfWeek-1)}==${dp.day}"> <span
+						th:class="${dp.price}>=0? 'gd-blue' : 'gd-red'"
+						th:text="${dp.price}"></span>
+					</span>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+</body>
+</html>

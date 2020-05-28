@@ -25,7 +25,7 @@ public class MemberService {
 	
 	@Autowired private MemberMapper memberMapper;
 	@Autowired private MemberidMapper memberidMapper;
-	@Value("C:\\Users\\GDJ2\\git\\cashbook\\cashbook\\cashbook\\src\\main\\resources\\static\\upload") 
+	@Value("C:\\Users\\gd\\git\\cashbook\\cashbook\\cashbook\\src\\main\\resources\\static\\upload") 
 	private String path;
 	public int modifyPw(String memberId, String memberPw1, String memberPw2) {
 		Map<String, Object> map = new HashMap<>();

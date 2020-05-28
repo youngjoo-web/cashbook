@@ -7,26 +7,23 @@ import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
-import com.gdu.cashbook.vo.Book;
-import com.gdu.cashbook.vo.BookAndPrice;
 import com.gdu.cashbook.vo.Cash;
 import com.gdu.cashbook.vo.DayAndPrice;
+import com.gdu.cashbook.vo.LoginMember;
 
 @Mapper
 public interface CashMapper {
-	public int selectBookId(Book book);
+	public int deleteCashByMember(LoginMember loginMember);
 	
 	public int insertCash(Cash cash);
 	
-	public int deleteCash(Cash cash);
-	
 	public int updateCash(Cash cash);
+	
+	public int deleteCash(int cashNo);
 	
 	public List<DayAndPrice> selectDayAndPriceList(Map<String, Object> map);
 	
-	public int selectYearAndPriceSum(Map<String, Object> map);
-	
-	public List<BookAndPrice> selectBookAndPriceList(Map<String, Object> map);
+	public Cash selectCashOne(int cashNo);
 	
 	public ArrayList<Cash> selectCashListByDate(Cash cash);
 	
