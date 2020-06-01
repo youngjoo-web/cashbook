@@ -53,9 +53,16 @@ public class CommentController {
 	public String removeComment(HttpSession session,
 			Model model,
 			@RequestParam(value = "commentNo", required = false, defaultValue = "0")int commentNo) {
+		if(commentNo == 0) {
+			return "redirect:/";
+		}
+		LoginMember loginMember = (LoginMember)session.getAttribute("loginMember");
 		Comment comment = commentService.getComment(commentNo);
+		if(loginMember.getMemberId().equals(comment.getMemberId())) {
+			commentService.removeComment(commentNo);
+		}
 		Board board = boardService.getBoardOne(comment.getBoardNo());
-		commentService.removeComment(commentNo);
+		
 		model.addAttribute("board", board);
 		int rowPerPage=10;
 		
@@ -86,6 +93,8 @@ public class CommentController {
 			Model model,
 			@RequestParam(value = "commentNo", required = false, defaultValue = "0")int commentNo) {
 		Comment comment = commentService.getComment(commentNo);
+		LoginMember loginMember = (LoginMember)session.getAttribute("loginMember");
+		
 		Board board = boardService.getBoardOne(comment.getBoardNo());
 		model.addAttribute("board", board);
 		
@@ -96,7 +105,9 @@ public class CommentController {
 		
 		//commentNo for modify
 		model.addAttribute("comment", comment);
-		
+		if(loginMember.getMemberId().equals(comment.getMemberId())) {
 		return "modifyComment";
+		}
+		return "boardOneList";
 	}
 }

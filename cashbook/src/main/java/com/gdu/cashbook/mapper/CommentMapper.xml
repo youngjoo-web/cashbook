@@ -34,7 +34,6 @@
 		SET comment_content = #{commentContent}
 		WHERE comment_no = #{commentNo}
 	</update>
-	
 	<delete id="deleteComment" parameterType="int">
 		DELETE 
 		FROM comment

@@ -37,7 +37,30 @@
 		WHERE member_id = #{memberId}
 		AND	member_pw = PASSWORD(#{memberPw})
 	</delete>
-
+	<delete id="deleteCashByMember" parameterType="com.gdu.cashbook.vo.LoginMember">
+		DELETE FROM cash
+		WHERE member_id = #{memberId}
+	</delete>
+	<delete id="deleteCommentByMember" parameterType="com.gdu.cashbook.vo.LoginMember">
+		DELETE FROM comment
+		WHERE member_id = #{memberId}
+	</delete>
+	<select id="selectMemberList" parameterType="java.util.Map" resultType="com.gdu.cashbook.vo.Member">
+		SELECT
+			member_id as memberId,
+			member_name as memberName,
+			member_addr as memberAddr,
+			member_phone as memberPhone,
+			member_email as memberEmail,
+			member_pic as memberPic
+		FROM member
+		LIMIT #{beginRow}, #{rowPerPage}
+	</select>
+	<select id="selectMemberCount" resultType="int">
+		SELECT
+			COUNT(*) as count
+		FROM member
+	</select>
 	<select id="selectMemberOne" parameterType="com.gdu.cashbook.vo.LoginMember" resultType="com.gdu.cashbook.vo.Member">
 		SELECT
 			member_id as memberId,

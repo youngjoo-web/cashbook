@@ -3,6 +3,7 @@ package com.gdu.cashbook.service;
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -34,6 +35,16 @@ public class MemberService {
 		map.put("memberPw2", memberPw2);
 		return memberMapper.updateMemberPw(map);
 	}
+	public int getMemberCount() {
+		return memberMapper.selectMemberCount();
+	}
+	public List<Member> getMemberList(int currentPage,int rowPerPage){
+		int beginRow = (currentPage-1)*rowPerPage;
+		Map<String, Object> map = new HashMap<>();
+		map.put("beginRow", beginRow);
+		map.put("rowPerPage", rowPerPage);
+		return memberMapper.selectMemberList(map);
+	}
 	public int getMemberPw(Member member) { // id&email
 		// pw추가
 		UUID uuid = UUID.randomUUID(); // 랜덤문자열 생성 라이브러리(API)
@@ -53,25 +64,26 @@ public class MemberService {
 	}
 	
 	public void removeMember(LoginMember loginMember) {
-		// 1.
+		// 1. memberid 테이블에 추가
 		Memberid memberid = new Memberid();
 		memberid.setMemberId(loginMember.getMemberId());
 		memberidMapper.insertMemberid(memberid);
 		
-		// 2. 
+		// 2. memberPic 삭제
 		Member member = memberMapper.selectMemberOne(loginMember);
 		String memberPic = member.getMemberPic();
 		File file = new File(path +"\\"+ memberPic);
-		if(memberPic.equals("default.jpg") ) {
-			memberMapper.deleteMember(loginMember);
-		}else {
-			memberMapper.deleteMember(loginMember);
+		if(memberPic.equals("default.jpg") ) {	
+		}else {	
 			try {
 				file.delete();
 			}catch(Exception e){
 				e.printStackTrace();
 			}
 		}
+		memberMapper.deleteCashByMember(loginMember);
+		memberMapper.deleteCommentByMember(loginMember);
+		memberMapper.deleteMember(loginMember);
 		
 	}
 	

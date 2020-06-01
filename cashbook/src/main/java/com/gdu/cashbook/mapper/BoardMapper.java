@@ -14,8 +14,6 @@ public interface BoardMapper {
 	
 	public int deleteBoard(Board board);
 	
-	
-	
 	public int updateBoard(Board board);
 	
 	public List<Board> selectBoardList(Map<String, Object> map);

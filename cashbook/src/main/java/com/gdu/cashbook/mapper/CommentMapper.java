@@ -19,7 +19,5 @@ public interface CommentMapper {
 	
 	public int deleteComment(int commentNo);
 	
-	
-	
 	public Comment selectComment(int commentNo);
 }

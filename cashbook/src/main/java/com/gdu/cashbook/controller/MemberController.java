@@ -2,6 +2,8 @@ package com.gdu.cashbook.controller;
 
 
 
+import java.util.List;
+
 import javax.servlet.http.HttpSession;
 import javax.websocket.Session;
 
@@ -72,6 +74,34 @@ public class MemberController {
 		}
 		model.addAttribute("msg", msg);
 		return "memberPwView";
+	}
+	@GetMapping("/getMemberList")
+	public String getMemberList(HttpSession session, Model model,
+			@RequestParam(value = "currentPage", required = false, defaultValue = "1") int currentPage) {
+		if(session.getAttribute("loginMember") == null) {
+			return "redirect:/";
+		}
+		LoginMember loginMember = (LoginMember)session.getAttribute("loginMember");
+		if(loginMember.getMemberLevel()!=0) {
+			return "redirect:/";
+		}
+		int rowPerPage = 10;
+		
+		int totalCount = boardService.getBoardCount();
+		int lastPage=totalCount/rowPerPage;
+		if(totalCount%rowPerPage!=0) {
+			lastPage += 1;
+		}
+		if(totalCount == 0) {
+			lastPage = 1;
+		}
+		
+		List<Member>memberList = memberService.getMemberList(currentPage, rowPerPage);
+		
+		model.addAttribute("memberList",memberList);
+		model.addAttribute("currentPage",currentPage);
+		model.addAttribute("lastPage",lastPage);
+		return "getMemberList";
 	}
 	@GetMapping("/findMemberPw")
 	public String findMemberPw(HttpSession session) {
@@ -162,6 +192,15 @@ public class MemberController {
 			return "redirect:/";
 		}
 		return "removeMember";
+	}
+	@GetMapping("/getMemberInfo")
+	public String memberInfo(HttpSession session, Model model,
+			@RequestParam("memberId") String memberId) {
+		LoginMember loginMember = new LoginMember();
+		loginMember.setMemberId(memberId);
+		Member member = memberService.getMemberOne(loginMember);
+		model.addAttribute("member", member);
+		return "memberInfo";
 	}
 	@GetMapping("/memberInfo")
 	public String memberInfo(HttpSession session, Model model) {
