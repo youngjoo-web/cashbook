@@ -16,11 +16,11 @@
 <script
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
 <style>
-#aside {
+	#aside {
 	width: 200px;
 	height: 3000px;
 	position: fixed;
-	background: blue;
+	background: #36FFFF;
 	overflow: hidden;
 	float: left;
 }
@@ -68,7 +68,7 @@
 			<br> <br>
 			<div align="left">
 
-				<form method="post" action="http://dudwn715.cafe24.com/cashbook_cashbook/modifyComment">
+				<form method="post" action="/modifyComment">
 					<input type="hidden" name="boardNo"
 						th:value="${comment.boardNo}"> <input type="hidden"
 						name="commentNo" th:value="${comment.commentNo}">

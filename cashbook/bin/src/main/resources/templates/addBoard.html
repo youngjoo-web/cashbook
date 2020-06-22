@@ -37,45 +37,21 @@
 			<div style="padding: 20px;">
 				<div class="card">
 					<div class="card-body">
-						<h1 align="center">가게부추가</h1>
-						<form method="post" action="/addCash" >
+						<h1 align="center">게시글추가</h1>
+						<form method="post" action="/addBoard" >
 							<div class="row">
 								<div class="col-sm-2"></div>
 								<div class="col-sm-8">
 									<div align="left">
-										날짜<br>
-										<input type="date"name="cashDate"
-											 class="form-control">
+										제목<br>
+										<input type="text"name="boardTitle"
+											 class="form-control" placeholder="제목">
 									</div>
 									<div align="left">
-										종류<br>
-										<select name="cashKind">
-											<option value="수입">수입</option>
-											<option value="지출">지출</option>
-										</select>
+										내용<br>
+										<input type="text" name="boardContent" class="form-control"
+											placeholder="내용">
 									</div>
-									<div align="left">
-										카테고리<br>
-										<input type="text" name="categoryName" class="form-control"
-											placeholder="카테고리">
-									</div>
-									<div align="left">
-										금액<br>
-										<input type="text"name="cashPrice"placeholder="숫자"> 
-									</div>
-									<div align="left">
-										장소<br>
-										<input type="text" name="cashPlace" 
-											class="form-control" placeholder="장소"> <span
-											id="nameHelper"></span>
-									</div>
-									<div align="left">
-										메모<br>
-										<input type="text" name="cashMemo"
-											class="form-control" placeholder="메모"> <span
-											></span>
-									</div>
-									
 									<br>
 									<div align="center">
 										<button type="submit"

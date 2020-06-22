@@ -3,87 +3,68 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.gdu.cashbook.mapper.BoardMapper">
-<!-- 
-insertBoard
-parameterType = Board
 
-selectBoardList
-parameterType = beginRow, rowPerPage
-resultType = Board
-
-selectBoard
-parameterType = Board
-resultType = Board
-
-deleteCommentByBoard
-parameterType = Board
-
-deleteBoard
-parameterType = Board
-
-updateBoard
-parameterType = Board
- -->
- 	<select id="selectBoardCount" resultType="int">
- 		SELECT
- 			COUNT(*)
- 		FROM board
- 	</select>
+	<select id="selectBoardList" parameterType="java.util.Map" resultType="com.gdu.cashbook.vo.Board">
+		SELECT
+			board_no AS boardNo,
+			board_title AS boardTitle,
+			board_content AS boardContent,
+			member_id AS memberId,
+			member_name AS memberName,
+			last_update AS lastUpdate
+		FROM board
+		ORDER BY last_update DESC
+		LIMIT #{beginRow}, #{rowPerPage}
+	</select>
+	<select id="selectBoardCount" resultType="int">
+		SELECT
+			COUNT(*) as count
+		FROM board
+	</select>
+	<select id="selectBoardOne" parameterType="com.gdu.cashbook.vo.Board" resultType="com.gdu.cashbook.vo.Board">
+		SELECT
+			board_no AS boardNo,
+			board_title AS boardTitle,
+			board_content AS boardContent,
+			member_id AS memberId,
+			member_name AS memberName,
+			last_update AS lastUpdate
+		FROM board
+		WHERE board_no = #{boardNo}
+	</select>
 	<insert id="insertBoard" parameterType="com.gdu.cashbook.vo.Board">
-		INSERT INTO Board(
-			board_no,
+		INSERT 
+		INTO 
+			board(
 			board_title,
 			board_content,
 			member_id,
 			member_name,
-			last_update
-		) VALUES (
-			#{boardNo},
+			last_update)
+		VALUES(
 			#{boardTitle},
 			#{boardContent},
 			#{memberId},
 			#{memberName},
 			now()
-		)
+			)	
 	</insert>
-	<select id="selectBoardList" parameterType="java.util.Map" resultType="com.gdu.cashbook.vo.Board">
-		SELECT
-			board_no as boardNo,
-			board_title as boardTitle,
-			board_content as boardContent,
-			member_id as memberId,
-			member_name as memberName,
-			last_update as lastUpdate
-		FROM board
-		ORDER BY last_update DESC
-		LIMIT #{beginRow}, #{rowPerPage}
-	</select>
-	<select id="selectBoard" parameterType="com.gdu.cashbook.vo.Board" resultType="com.gdu.cashbook.vo.Board">
-		SELECT
-			board_no as boardNo,
-			board_title as boardTitle,
-			board_content as boardContent,
-			member_id as memberId,
-			member_name as memberName,
-			last_update as lastUpdate
-		FROM board
-		WHERE board_no = #{boardNo}
-			
-	</select>
 	<update id="updateBoard" parameterType="com.gdu.cashbook.vo.Board">
 		UPDATE board
-		SET board_title = #{boardTitle}
+		SET board_title = #{boardTitle},
 			board_content = #{boardContent}
-			last_update = now()
 		WHERE board_no = #{boardNo}
+		
 	</update>
+	
 	<delete id="deleteCommentByBoard" parameterType="com.gdu.cashbook.vo.Board">
-		DELETE FROM comment
+		DELETE
+		FROM comment
 		WHERE board_no = #{boardNo}
 	</delete>
 	<delete id="deleteBoard" parameterType="com.gdu.cashbook.vo.Board">
-		DELETE FROM board
-		WHERE board_no = #{boardNo}	
+		DELETE
+		FROM board
+		WHERE board_no = #{boardNo}
 	</delete>
-	
 </mapper>

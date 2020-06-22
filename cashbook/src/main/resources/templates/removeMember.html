@@ -30,7 +30,7 @@
 	width: 200px;
 	height: 3000px;
 	position: fixed;
-	background: #36FFFF;
+	background: blue;
 	overflow: hidden;
 	float: left;
 }
@@ -40,7 +40,7 @@
 	<div id="aside" th:include="/include/menu::sidemenu"></div> 
 	<div class="container">
 	<h1 align="center">회원탈퇴</h1>
-	<form method="post" id="removeMember" action="/removeMember">
+	<form method="post" id="removeMember" action="http://dudwn715.cafe24.com/cashbook_cashbook/removeMember">
 		<div>
 			<input type="hidden" name="memberId" th:value="${session.loginMember.memberId}">
 			비밀번호입력

@@ -22,7 +22,26 @@
 </head>
 <body>
 	<div class="row">
-		<div class="col-sm-5"></div>
+		<div align="center" class="col-sm-5" style="padding: 20px;">
+			-개인프로젝트 가계부-<br><br>
+				1. 회원가입기능 구현<br>
+					- 아이디중복확인가능<br>
+					- 사진추가기능<br>
+					- 비밀번호 확인기능<br><br>
+				2. 로그인기능<br>
+					- 받아온값이 데이터베이스에 일치하면 로그인성공<br>
+					- 받아온값을 세션값에 저장<br><br>
+				3. 가계부 기능<br>
+					- 가계부데이터 추가<br>
+					- 추가된 데이터와 멤버아이디에 일치하는 값들을 연산<br>
+					- 월별합계, 일별합계 기능 구현<br>
+					- 캘린더형식으로 보이게 기능 구현<br><br>
+				4. 게시판 기능<br>
+					- 게시글 추가는 관리자(member_level 0) 만 가능<br>
+					- 게시글 수정및 삭제도 관리자만 가능<br>
+					- 댓글은 관리자 일반회원 모두 가능<br>
+					- 수정, 삭제는 본인이 쓴 댓글만 삭제 가능<br>
+		</div>
 		<div class="col-sm-2">
 			<div>
 				<h1 align="center" th:text="가계부"
@@ -32,6 +51,7 @@
 				<div th:if="${session.loginMember != null}">
 					<!-- 로그인이 되어있을시 -->
 					<a href="/home" class="btn btn-primary btn-block">홈</a>
+					<br><br>
 					<a href="/logout" class="btn btn-primary btn-block">로그아웃</a>
 				</div>
 				<div th:if="${session.loginMember == null}">
@@ -40,7 +60,9 @@
 					<br> <a href="/addMember" class="btn btn-primary btn-block">회원가입</a>
 				</div>
 			</div>
-			<div class="col-sm-5"></div>
+			<div align="right" class="col-sm-5" style="padding: 10;">
+				
+			</div>
 		</div>
 	</div>
 	<h6 align="center" style="padding: 100px 0px 0px 0px;">본 콘텐츠의 저작권은

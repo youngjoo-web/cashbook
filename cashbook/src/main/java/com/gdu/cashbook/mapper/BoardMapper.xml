@@ -3,7 +3,7 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.gdu.cashbook.mapper.BoardMapper">
-
+<!-- 테이블이름 변경 -->
 	<select id="selectBoardList" parameterType="java.util.Map" resultType="com.gdu.cashbook.vo.Board">
 		SELECT
 			board_no AS boardNo,
@@ -12,14 +12,14 @@
 			member_id AS memberId,
 			member_name AS memberName,
 			last_update AS lastUpdate
-		FROM board
+		FROM cashbook_board
 		ORDER BY last_update DESC
 		LIMIT #{beginRow}, #{rowPerPage}
 	</select>
 	<select id="selectBoardCount" resultType="int">
 		SELECT
 			COUNT(*) as count
-		FROM board
+		FROM cashbook_board
 	</select>
 	<select id="selectBoardOne" parameterType="com.gdu.cashbook.vo.Board" resultType="com.gdu.cashbook.vo.Board">
 		SELECT
@@ -29,13 +29,13 @@
 			member_id AS memberId,
 			member_name AS memberName,
 			last_update AS lastUpdate
-		FROM board
+		FROM cashbook_board
 		WHERE board_no = #{boardNo}
 	</select>
 	<insert id="insertBoard" parameterType="com.gdu.cashbook.vo.Board">
 		INSERT 
 		INTO 
-			board(
+			cashbook_board(
 			board_title,
 			board_content,
 			member_id,
@@ -50,7 +50,7 @@
 			)	
 	</insert>
 	<update id="updateBoard" parameterType="com.gdu.cashbook.vo.Board">
-		UPDATE board
+		UPDATE cashbook_board
 		SET board_title = #{boardTitle},
 			board_content = #{boardContent}
 		WHERE board_no = #{boardNo}
@@ -59,12 +59,12 @@
 	
 	<delete id="deleteCommentByBoard" parameterType="com.gdu.cashbook.vo.Board">
 		DELETE
-		FROM comment
+		FROM cashbook_comment
 		WHERE board_no = #{boardNo}
 	</delete>
 	<delete id="deleteBoard" parameterType="com.gdu.cashbook.vo.Board">
 		DELETE
-		FROM board
+		FROM cashbook_board
 		WHERE board_no = #{boardNo}
 	</delete>
 </mapper>

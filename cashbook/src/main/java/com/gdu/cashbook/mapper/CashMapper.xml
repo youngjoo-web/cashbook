@@ -4,16 +4,16 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.gdu.cashbook.mapper.CashMapper">
 	<delete id="deleteCash" parameterType="int">
-		DELETE FROM cash
+		DELETE FROM cashbook_cash
 		WHERE cash_no = #{cashNo}
 		
 	</delete>
 	<delete id="deleteCashByMember" parameterType="com.gdu.cashbook.vo.LoginMember">
-		DELETE FROM cash
+		DELETE FROM cashbook_cash
 		WHERE member_id = #{memberId}
 	</delete>
 	<update id="updateCash" parameterType="com.gdu.cashbook.vo.Cash">
-		UPDATE cash 
+		UPDATE cashbook_cash 
 		SET cash_kind = #(cashKind),
 			category_name = #{categoryName},
 			cash_price = #{cashPrice},
@@ -22,7 +22,7 @@
 		WHERE cash_no = #{cashNo}
 	</update>
 	<insert id="insertCash" parameterType="com.gdu.cashbook.vo.Cash">
-		INSERT INTO cash(
+		INSERT INTO cashbook_cash(
 			member_id,
 			cash_date,
 			cash_kind,
@@ -48,14 +48,14 @@
 			cash_price as cashPrice,
 			cash_place as cashPlace,
 			cash_memo as cashMemo
-		FROM cash
+		FROM cashbook_cash
 		WHERE cash_no = #{cashNo}
 	</select>
 	<select id="selectDayAndPriceList" parameterType="java.util.Map" resultType="com.gdu.cashbook.vo.DayAndPrice">
 		SELECT DAY(cash_date) as day,
 		SUM(CASE WHEN cash_kind='수입' THEN cash_price
 		WHEN cash_kind='지출' THEN -cash_price END) as price
-		FROM cash
+		FROM cashbook_cash
 		WHERE member_id
 		= #{memberId}
 		AND YEAR(cash_date) = #{year}
@@ -73,7 +73,7 @@
 		cash_price as cashPrice,
 		cash_place as cashPlace,
 		cash_memo as cashMemo
-		FROM cash
+		FROM cashbook_cash
 		WHERE member_id = #{memberId}
 		AND cash_date =
 		#{cashDate}
@@ -81,7 +81,7 @@
 	<select id="selectCashKindSum" parameterType="com.gdu.cashbook.vo.Cash" resultType="int">
 		SELECT SUM(CASE
 		WHEN cash_kind='수입' THEN cash_price WHEN cash_kind='지출' THEN
-		-cash_price END) as price FROM cash
+		-cash_price END) as price FROM cashbook_cash
 		WHERE member_id = #{memberId} AND cash_date=#{cashDate}
 	</select>
 </mapper>

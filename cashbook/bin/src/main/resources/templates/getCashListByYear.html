@@ -69,21 +69,13 @@ div.gd-title {
 			<h3 th:text="${month+'월'}"></h3>
 
 			<div>
-				<a th:href="@{http://dudwn715.cafe24.com/cashbook_cashbook/getCashListByMonth(day=${day.plusMonths(-1)})}">이전</a>
-				<a th:href="@{http://dudwn715.cafe24.com/cashbook_cashbook/getCashListByMonth(day=${day.plusMonths(1)})}">다음</a>
+				<a th:href="@{/getCashListByYear(day=${day.plusYears(-1)})}">이전</a>
+				<a th:href="@{/getCashListByYear(day=${day.plusYears(1)})}">다음</a>
 			</div>
 
-			<div class="gd-left gd-clear gd-title">일</div>
-			<div class="gd-left gd-title">월</div>
-			<div class="gd-left gd-title">화</div>
-			<div class="gd-left gd-title">수</div>
-			<div class="gd-left gd-title">목</div>
-			<div class="gd-left gd-title">금</div>
-			<div class="gd-left gd-title">토</div>
-			<!-- 5월달 lastDay==31 -->
+			
 			<div
-				th:each="i,index : ${#numbers.sequence(1, lastDay+(firstDayOfWeek-1))}"
-				th:class="${index.index%7} ==0 ? 'gd-clear gd-left':  'gd-left'">
+				th:each="bookAndPriceList:">
 				<div
 					th:text="${i-(firstDayOfWeek-1)}>0 ? ${i-(firstDayOfWeek-1)} : ''"></div>
 				<div th:each="dp : ${dayAndPriceList}">
